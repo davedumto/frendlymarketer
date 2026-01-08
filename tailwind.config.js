@@ -10,8 +10,7 @@ module.exports = {
       colors: {
         'primary': '#0F5E70', // teal
         'accent': '#D3A032', // golden yellow
-        'light': '#F3F1EC', // cream
-        'charcoal': '#333333', // dark charcoal for text
+        'light': '#F3F1E0', // cream
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],

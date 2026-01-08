@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import '../index.css'
+import '../styles/wordpress-forms.css'
+import '../styles/animations.css'
 
 export const metadata: Metadata = {
   title: 'Friendly Marketer - Digital Marketing Agency',

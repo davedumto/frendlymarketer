@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPinIcon, MailIcon, PhoneIcon, FacebookIcon, TwitterIcon, InstagramIcon, LinkedinIcon } from 'lucide-react';
+import { MapPinIcon, MailIcon, FacebookIcon, TwitterIcon, InstagramIcon, LinkedinIcon } from 'lucide-react';
 import Image from 'next/image';
 const Footer = () => {
   return <footer className="bg-primary text-white pt-16 pb-8">
@@ -8,7 +8,7 @@ const Footer = () => {
           <div>
             <div className="mb-6">
               <Image
-                src="/images/logos/logo.png"
+                src="/images/logos/logos.png"
                 alt="Frendly MarQeter Logo"
                 width={150}
                 height={50}
@@ -35,90 +35,85 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h3 className="text-xl font-semibold mb-6">Important Links</h3>
+            <h3 className="text-xl font-semibold mb-6 text-accent">IMPORTANT</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/about" className="text-white/80 hover:text-accent transition-colors">
                   Who We Are
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/services" className="text-white/80 hover:text-accent transition-colors">
                   What We Offer
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/blog" className="text-white/80 hover:text-accent transition-colors">
                   Blogs
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/portfolio" className="text-white/80 hover:text-accent transition-colors">
                   Portfolio
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/privacy-policy" className="text-white/80 hover:text-accent transition-colors">
                   Privacy Policy
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-xl font-semibold mb-6">What We Offer</h3>
+            <h3 className="text-xl font-semibold mb-6 text-accent">WHAT WE OFFER</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
-                  Web Development
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/services/digital-marketing" className="text-white/80 hover:text-accent transition-colors">
                   Digital Marketing
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/services/graphic-design" className="text-white/80 hover:text-accent transition-colors">
                   Graphic Design
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
-                  Video Production
+                <a href="/services/seo" className="text-white/80 hover:text-accent transition-colors">
+                  S.E.O
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
+                <a href="/services/social-media" className="text-white/80 hover:text-accent transition-colors">
                   Social Media
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-accent transition-colors">
-                  SEO
+                <a href="/services/video-production" className="text-white/80 hover:text-accent transition-colors">
+                  Video Production
+                </a>
+              </li>
+              <li>
+                <a href="/services/web-development" className="text-white/80 hover:text-accent transition-colors">
+                  Web Development
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-xl font-semibold mb-6">Contact Us</h3>
+            <h3 className="text-xl font-semibold mb-6 text-accent">GET IN TOUCH</h3>
             <ul className="space-y-4">
-              <li className="flex items-start">
-                <MapPinIcon className="w-5 h-5 mr-3 text-accent shrink-0 mt-0.5" />
-                <span className="text-white/80">
-                  123 Marketing Street, Digital City, DC 10101
-                </span>
-              </li>
               <li className="flex items-center">
                 <MailIcon className="w-5 h-5 mr-3 text-accent shrink-0" />
                 <a href="mailto:info@frendlymarqeter.com" className="text-white/80 hover:text-accent transition-colors">
                   info@frendlymarqeter.com
                 </a>
               </li>
-              <li className="flex items-center">
-                <PhoneIcon className="w-5 h-5 mr-3 text-accent shrink-0" />
-                <a href="tel:+11234567890" className="text-white/80 hover:text-accent transition-colors">
-                  +1 (123) 456-7890
-                </a>
+              <li className="flex items-start">
+                <MapPinIcon className="w-5 h-5 mr-3 text-accent shrink-0 mt-0.5" />
+                <span className="text-white/80">
+                  Keystones Park, Riverside Drive,<br />
+                  Baraza Media Lab offices
+                </span>
               </li>
             </ul>
           </div>

@@ -1,43 +1,78 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import HeroSlider from '../components/HeroSlider';
-import StatsStrip from '../components/StatsStrip';
-import AgencyIntro from '../components/AgencyIntro';
-import ServicesGrid from '../components/ServicesGrid';
-import WhyChooseUs from '../components/WhyChooseUs';
-import CTABand from '../components/CTABand';
-import Portfolio from '../components/Portfolio';
-import BlogSection from '../components/BlogSection';
-import Testimonials from '../components/Testimonials';
-import Partners from '../components/Partners';
 import Footer from '../components/Footer';
+import HeroSection from '../components/HeroSection';
+import ServicesSection from '../components/ServicesSection';
+import WhyChooseUsSection from '../components/WhyChooseUsSection';
+import BlogSection from '../components/BlogSection';
+import FinalCTASection from '../components/FinalCTASection';
+import TestimonialSection from '../components/TestimonialSection';
+import { getRecentPosts } from '../lib/api';
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getRecentPosts(3);
+
+  // Hardcoded testimonials
+  const testimonials = [
+    {
+      id: '1',
+      title: 'Bernard',
+      content: 'Thanks to the exceptional SEO services provided by Frendly MarQeter, our online visibility skyrocketed. Their strategic approach and attention to detail helped us climb the ranks, driving significant organic traffic to our website.',
+      testimonialFields: {
+        clientName: 'Bernard',
+        clientPosition: 'Customer',
+        clientCompany: '',
+        rating: 5
+      }
+    },
+    {
+      id: '2',
+      title: 'Clever',
+      content: 'I was thoroughly impressed by Frendly MarQeter\'s digital marketing expertise! Their creative strategies, timely execution, and clear understanding of our goals helped us reach a wider audience and achieve measurable growth online.',
+      testimonialFields: {
+        clientName: 'Clever',
+        clientPosition: 'Customer',
+        clientCompany: '',
+        rating: 5
+      }
+    },
+    {
+      id: '3',
+      title: 'Silvia',
+      content: 'Working with Frendly MarQeter on our website development was an absolute pleasure! Their team not only possessed technical prowess but also a keen understanding of our brand and objectives.',
+      testimonialFields: {
+        clientName: 'Silvia',
+        clientPosition: 'Customer',
+        clientCompany: '',
+        rating: 5
+      }
+    }
+  ];
+
   return (
-    <div>
-      <Navbar />
-      <main>
-        <HeroSlider />
-        <StatsStrip />
-        <AgencyIntro />
-        <ServicesGrid />
-        <WhyChooseUs />
-        <CTABand 
-          heading="Ready to work with us?" 
-          subheading="Let's transform your digital presence together." 
-          buttonText="Get Started" 
-        />
-        <Portfolio />
-        <BlogSection />
-        <Testimonials />
-        <Partners />
-        <CTABand 
-          heading="Join us on a journey of change and growth." 
-          subheading="Experience the difference of working with a dedicated team of digital experts." 
-          buttonText="Get Started" 
-          darkBackground={true} 
-        />
-      </main>
+    <div className="bg-white">
+      <Navbar isHomepage={true} />
+
+      {/* Hero Section with Video Background */}
+      <HeroSection />
+
+      {/* Services Section - Color Block Style */}
+      <ServicesSection />
+
+      {/* Why Choose Us - Split Section */}
+      <WhyChooseUsSection />
+
+      {/* Blog Section */}
+      <section className="bg-light py-20">
+        <BlogSection posts={posts} />
+      </section>
+
+      {/* Testimonials Section */}
+      <TestimonialSection testimonials={testimonials} />
+
+      {/* Final CTA Section */}
+      <FinalCTASection />
+
       <Footer />
     </div>
   );

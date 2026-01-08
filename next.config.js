@@ -10,6 +10,23 @@ const nextConfig = {
   },
   images: {
     unoptimized: false,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'frendlymarqeter.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'randomuser.me',
+        pathname: '/**',
+      },
+    ],
   },
   // Disabled experimental features that require additional dependencies
   // experimental: {
