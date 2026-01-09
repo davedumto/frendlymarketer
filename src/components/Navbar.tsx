@@ -117,7 +117,7 @@ const Navbar = ({ isHomepage = false }: NavbarProps) => {
             />
           )}
         </Link>
-        <Link href="/consultation" className="ml-4 px-6 py-2 bg-accent text-charcoal font-medium rounded-md hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-sm">
+        <Link href="/consultation" className="ml-4 px-6 py-2 bg-accent text-charcoal font-medium  hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-sm">
           Free Consultation
         </Link>
       </nav>
@@ -174,7 +174,7 @@ const Navbar = ({ isHomepage = false }: NavbarProps) => {
         <Link href="/blog" className="font-medium py-2 hover:text-accent transition-colors">
           Blogs
         </Link>
-        <Link href="/consultation" className="px-6 py-2 bg-accent text-charcoal font-medium rounded-md hover:bg-opacity-90 transition-all text-center">
+        <Link href="/consultation" className="px-6 py-2 bg-accent text-charcoal font-medium hover:bg-opacity-90 transition-all text-center">
           Free Consultation
         </Link>
       </div>

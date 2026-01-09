@@ -1,19 +1,12 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { Quote, Star } from 'lucide-react';
 
 interface Testimonial {
     id: string;
     title: string;
     content: string;
-    featuredImage?: {
-        node: {
-            sourceUrl: string;
-            altText: string;
-        };
-    };
     testimonialFields?: {
         clientName?: string;
         clientPosition?: string;
@@ -60,7 +53,7 @@ const TestimonialSection = ({ testimonials = [] }: TestimonialSectionProps) => {
                     {testimonials.slice(0, 3).map((testimonial, index) => (
                         <motion.div
                             key={testimonial.id}
-                            className="bg-white rounded-lg p-8 shadow-lg relative"
+                            className="bg-white p-8 shadow-lg relative"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -76,8 +69,8 @@ const TestimonialSection = ({ testimonials = [] }: TestimonialSectionProps) => {
                                         <Star
                                             key={i}
                                             className={`w-5 h-5 ${i < (testimonial.testimonialFields?.rating || 0)
-                                                    ? 'text-accent fill-accent'
-                                                    : 'text-gray-300'
+                                                ? 'text-accent fill-accent'
+                                                : 'text-gray-300'
                                                 }`}
                                         />
                                     ))}
@@ -90,29 +83,17 @@ const TestimonialSection = ({ testimonials = [] }: TestimonialSectionProps) => {
                             </p>
 
                             {/* Client Info */}
-                            <div className="flex items-center gap-4 border-t border-gray-100 pt-6">
-                                {testimonial.featuredImage?.node.sourceUrl && (
-                                    <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                                        <Image
-                                            src={testimonial.featuredImage.node.sourceUrl}
-                                            alt={testimonial.testimonialFields?.clientName || 'Client'}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
+                            <div className="border-t border-gray-100 pt-6">
+                                <h4 className="font-bold text-primary">
+                                    {testimonial.testimonialFields?.clientName || testimonial.title}
+                                </h4>
+                                {testimonial.testimonialFields?.clientPosition && (
+                                    <p className="text-sm text-gray-600">
+                                        {testimonial.testimonialFields.clientPosition}
+                                        {testimonial.testimonialFields.clientCompany &&
+                                            ` at ${testimonial.testimonialFields.clientCompany}`}
+                                    </p>
                                 )}
-                                <div>
-                                    <h4 className="font-bold text-primary">
-                                        {testimonial.testimonialFields?.clientName || testimonial.title}
-                                    </h4>
-                                    {testimonial.testimonialFields?.clientPosition && (
-                                        <p className="text-sm text-gray-600">
-                                            {testimonial.testimonialFields.clientPosition}
-                                            {testimonial.testimonialFields.clientCompany &&
-                                                ` at ${testimonial.testimonialFields.clientCompany}`}
-                                        </p>
-                                    )}
-                                </div>
                             </div>
                         </motion.div>
                     ))}

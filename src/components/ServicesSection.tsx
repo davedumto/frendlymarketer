@@ -11,9 +11,12 @@ interface ServiceBlockProps {
     bgColor: string;
     textColor: string;
     imageSrc: string;
+    buttonBorderColor: string;
+    buttonBgColor: string;
+    buttonTextColor: string;
 }
 
-function ServiceBlock({ href, title, description, bgColor, textColor, imageSrc }: ServiceBlockProps) {
+function ServiceBlock({ href, title, description, bgColor, textColor, imageSrc, buttonBorderColor, buttonBgColor, buttonTextColor }: ServiceBlockProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -32,7 +35,7 @@ function ServiceBlock({ href, title, description, bgColor, textColor, imageSrc }
                     className="object-cover"
                 />
                 {/* Dark Overlay on Image */}
-                <div className="absolute inset-0 bg-primary/80" />
+                <div className="absolute inset-0 bg-black/70" />
             </div>
 
             {/* Content */}
@@ -50,7 +53,7 @@ function ServiceBlock({ href, title, description, bgColor, textColor, imageSrc }
                         {description}
                     </p>
                 </div>
-                <div className={`flex items-center font-semibold group-hover:translate-x-2 transition-transform ${isHovered ? 'text-accent' : ''}`}>
+                <div className={`flex items-center font-semibold group-hover:translate-x-2 transition-transform group-hover:text-accent px-6 py-3 border-2 ${buttonBorderColor} ${buttonBgColor} ${buttonTextColor} w-fit`}>
                     Explore Service
                     <ArrowRightIcon className="w-5 h-5 ml-2" />
                 </div>
@@ -71,6 +74,9 @@ export default function ServicesSection() {
                     bgColor="bg-white"
                     textColor="text-primary"
                     imageSrc="/images/Web Development Photo 1181675.jpg"
+                    buttonBorderColor="border-primary"
+                    buttonBgColor="bg-primary"
+                    buttonTextColor="text-white"
                 />
 
                 {/* Service Block 2 - Digital Marketing */}
@@ -81,6 +87,9 @@ export default function ServicesSection() {
                     bgColor="bg-primary"
                     textColor="text-white"
                     imageSrc="/images/Digital Marketing Photo.jpg"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                    buttonTextColor="text-primary"
                 />
 
                 {/* Service Block 3 - Graphic Design */}
@@ -91,6 +100,9 @@ export default function ServicesSection() {
                     bgColor="bg-accent"
                     textColor="text-primary"
                     imageSrc="/images/Graphic Design Photo 55570.jpg"
+                    buttonBorderColor="border-primary"
+                    buttonBgColor="bg-primary"
+                    buttonTextColor="text-white"
                 />
             </div>
 
@@ -105,11 +117,16 @@ export default function ServicesSection() {
                             className="object-cover"
                         />
                     </div>
-                    <div className="relative z-10">
-                        <h4 className="text-2xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                            SEO Services
-                        </h4>
-                        <p className="text-gray-600">Dominate search rankings & drive organic traffic</p>
+                    <div className="relative z-10 flex items-center justify-between">
+                        <div>
+                            <h4 className="text-2xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                                SEO Services
+                            </h4>
+                            <p className="text-gray-600">Dominate search rankings & drive organic traffic</p>
+                        </div>
+                        <div className="w-12 h-12 border-2 border-primary group-hover:border-primary group-hover:bg-primary flex items-center justify-center transition-all">
+                            <ArrowRightIcon className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                        </div>
                     </div>
                 </Link>
 
@@ -122,11 +139,16 @@ export default function ServicesSection() {
                             className="object-cover"
                         />
                     </div>
-                    <div className="relative z-10">
-                        <h4 className="text-2xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                            Social Media
-                        </h4>
-                        <p className="text-gray-600">Build communities & drive engagement</p>
+                    <div className="relative z-10 flex items-center justify-between">
+                        <div>
+                            <h4 className="text-2xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                                Social Media
+                            </h4>
+                            <p className="text-gray-600">Build communities & drive engagement</p>
+                        </div>
+                        <div className="w-12 h-12  border-2 border-accent group-hover:bg-primary flex items-center justify-center transition-all">
+                            <ArrowRightIcon className="w-5 h-5 text-accent transition-colors" />
+                        </div>
                     </div>
                 </Link>
 
@@ -139,11 +161,16 @@ export default function ServicesSection() {
                             className="object-cover"
                         />
                     </div>
-                    <div className="relative z-10">
-                        <h4 className="text-2xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                            Video Production
-                        </h4>
-                        <p className="text-gray-600">Tell your story through compelling video</p>
+                    <div className="relative z-10 flex items-center justify-between">
+                        <div>
+                            <h4 className="text-2xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                                Video Production
+                            </h4>
+                            <p className="text-gray-600">Tell your story through compelling video</p>
+                        </div>
+                        <div className="w-12 h-12 border-2 border-primary group-hover:bg-primary flex items-center justify-center transition-all">
+                            <ArrowRightIcon className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                        </div>
                     </div>
                 </Link>
             </div>

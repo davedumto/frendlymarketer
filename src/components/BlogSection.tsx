@@ -75,7 +75,7 @@ const BlogSection = ({ posts = [] }: BlogSectionProps) => {
           {posts.slice(0, 3).map((post, index) => (
             <motion.div
               key={post.id}
-              className="bg-white rounded-lg overflow-hidden shadow-lg border border-gray-100"
+              className="bg-white overflow-hidden shadow-lg border border-gray-100"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -112,7 +112,7 @@ const BlogSection = ({ posts = [] }: BlogSectionProps) => {
         <div className="text-center mt-12">
           <Link href="/blog">
             <motion.span
-              className="inline-block px-8 py-3 bg-accent text-primary font-bold rounded-md shadow-md hover:shadow-lg transition-all cursor-pointer"
+              className="inline-block px-8 py-3 bg-accent text-primary font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}

@@ -47,7 +47,7 @@ export default async function BlogPage() {
                   href={`/blog/${post.slug}`}
                   className="group"
                 >
-                  <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                  <div className="bg-white  overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                     {/* Image */}
                     <div className="h-56 overflow-hidden relative bg-gray-100">
                       <Image
