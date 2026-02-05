@@ -1,30 +1,51 @@
 import React from 'react';
-import { getAllPostSlugs, getPostBySlug } from '../../../lib/api';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeftIcon, CalendarIcon, UserIcon } from 'lucide-react';
+import prisma from '@/lib/prisma';
+import { getAllPostSlugs as getWordPressPostSlugs } from '../../../lib/api';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-// Generate static paths for all blog posts
+// Generate static paths for all blog posts (WordPress + Local)
 export async function generateStaticParams() {
-  const slugs = await getAllPostSlugs();
-  return slugs.map((slug) => ({
-    slug: slug,
-  }));
+  try {
+    // Get WordPress slugs
+    const wordpressSlugs = await getWordPressPostSlugs();
+
+    // Get local published post slugs
+    const localPosts = await prisma.blogPost.findMany({
+      where: { isPublished: true },
+      select: { slug: true },
+    });
+    const localSlugs = localPosts.map((post: { slug: string }) => post.slug);
+
+    // Combine both
+    const allSlugs = [...wordpressSlugs, ...localSlugs];
+
+    return allSlugs.map((slug) => ({
+      slug: slug,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
 }
 
 export default async function BlogPost({ params }: BlogPostPageProps) {
   // Await params for Next.js 16 compatibility
   const { slug } = await params;
 
-  const post = await getPostBySlug(slug);
+  // Fetch from unified endpoint
+  const post = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/unified/${slug}`, {
+    cache: 'no-store',
+  }).then(res => res.ok ? res.json() : null).catch(() => null);
 
   if (!post) {
     return (
@@ -89,7 +110,7 @@ export default async function BlogPost({ params }: BlogPostPageProps) {
             )}
             {post.categories && post.categories.nodes.length > 0 && (
               <div className="flex items-center gap-2">
-                {post.categories.nodes.map((category) => (
+                {post.categories.nodes.map((category: any) => (
                   <span
                     key={category.slug}
                     className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
@@ -113,7 +134,8 @@ export default async function BlogPost({ params }: BlogPostPageProps) {
               prose-ol:my-6 prose-ol:space-y-2
               prose-img:rounded-lg prose-img:shadow-md prose-img:my-8
               prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
-              [&>p]:mb-6 [&>h2]:mt-10 [&>h3]:mt-8"
+              [&>p]:mb-6 [&>h2]:mt-10 [&>h3]:mt-8
+              whitespace-pre-wrap break-words"
             dangerouslySetInnerHTML={{ __html: post.content || '' }}
           />
 
@@ -122,7 +144,7 @@ export default async function BlogPost({ params }: BlogPostPageProps) {
             <div className="mt-12 pt-8 border-t border-gray-200">
               <h3 className="text-lg font-semibold text-charcoal mb-4">Tags</h3>
               <div className="flex flex-wrap gap-2">
-                {post.tags.nodes.map((tag) => (
+                {post.tags.nodes.map((tag: any) => (
                   <span
                     key={tag.slug}
                     className="px-4 py-2 bg-light text-gray-700 rounded-md text-sm hover:bg-gray-200 transition-colors"

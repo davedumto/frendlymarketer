@@ -1,10 +1,28 @@
 import React from 'react';
-import { getAllPosts } from '../../lib/api';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon, CalendarIcon } from 'lucide-react';
+
+// Fetch all posts from both WordPress and local database
+async function getAllPosts() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/all`, {
+      cache: 'no-store', // Always fetch fresh data
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch posts');
+      return [];
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return [];
+  }
+}
 
 export default async function BlogPage() {
   const posts = await getAllPosts();
@@ -41,7 +59,7 @@ export default async function BlogPage() {
           {/* Blog Grid */}
           {posts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              {posts.map((post) => (
+              {posts.map((post: any) => (
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}

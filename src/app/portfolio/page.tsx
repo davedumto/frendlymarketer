@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
@@ -8,40 +8,78 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Palette, Code, Layers, Sparkles } from 'lucide-react';
 
 export default function PortfolioPage() {
-    const webProjects = [
+    // State for merged projects
+    const [allWebProjects, setAllWebProjects] = useState<any[]>([]);
+    const [allGraphicProjects, setAllGraphicProjects] = useState<any[]>([]);
+
+    // Hardcoded projects (existing)
+    const hardcodedWebProjects = [
         {
-            id: 1,
+            id: 'hardcoded-1',
             name: 'Harris Hawk Security',
             url: 'https://harrishawksecurity.co.ke',
             description: 'Professional security services website with modern design and user-friendly navigation.',
             image: '/images/harria-hawk.png',
+            order: 1,
         },
         {
-            id: 2,
+            id: 'hardcoded-2',
             name: 'Rivaton Translators',
             url: 'https://www.rivatontranslators.com',
             description: 'Multi-language translation platform with streamlined booking system.',
             image: '/images/rivaton.png',
+            order: 2,
         },
         {
-            id: 3,
+            id: 'hardcoded-3',
             name: 'Kuza Initiative',
             url: 'https://www.kuzainitiative.or.ke',
             description: 'Youth empowerment organization showcasing programs and impact.',
             image: '/images/kuza.png',
+            order: 3,
         },
     ];
 
-    const graphicProjects = [
-        { id: 1, image: '/images/Frendly-Marqeter-portfolio-1.png' },
-        { id: 2, image: '/images/Frendly-Marqeter-portfolio-2.png' },
-        { id: 3, image: '/images/Frendly-Marqeter-portfolio-3.png' },
-        { id: 5, image: '/images/Frendly-Marqeter-portfolio-5.png' },
-        { id: 7, image: '/images/Frendly-Marqeter-portfolio-7.png' },
-        { id: 8, image: '/images/Frendly-Marqeter-portfolio-8.png' },
-        { id: 9, image: '/images/Frendly-Marqeter-portfolio-9.png' },
-        { id: 10, image: '/images/Frendly-Marqeter-portfolio-10.png' },
+    const hardcodedGraphicProjects = [
+        { id: 'hardcoded-1', image: '/images/Frendly-Marqeter-portfolio-1.png', order: 1 },
+        { id: 'hardcoded-2', image: '/images/Frendly-Marqeter-portfolio-2.png', order: 2 },
+        { id: 'hardcoded-3', image: '/images/Frendly-Marqeter-portfolio-3.png', order: 3 },
+        { id: 'hardcoded-5', image: '/images/Frendly-Marqeter-portfolio-5.png', order: 5 },
+        { id: 'hardcoded-7', image: '/images/Frendly-Marqeter-portfolio-7.png', order: 7 },
+        { id: 'hardcoded-8', image: '/images/Frendly-Marqeter-portfolio-8.png', order: 8 },
+        { id: 'hardcoded-9', image: '/images/Frendly-Marqeter-portfolio-9.png', order: 9 },
+        { id: 'hardcoded-10', image: '/images/Frendly-Marqeter-portfolio-10.png', order: 10 },
     ];
+
+    // Fetch and merge projects on mount
+    useEffect(() => {
+        async function fetchProjects() {
+            try {
+                // Fetch web projects
+                const webResponse = await fetch('/api/portfolio/web');
+                const adminWebProjects = webResponse.ok
+                    ? (await webResponse.json()).filter((p: any) => p.isActive)
+                    : [];
+
+                // Fetch graphic projects
+                const graphicResponse = await fetch('/api/portfolio/graphic');
+                const adminGraphicProjects = graphicResponse.ok
+                    ? (await graphicResponse.json()).filter((p: any) => p.isActive)
+                    : [];
+
+                // Merge and sort
+                setAllWebProjects([...adminWebProjects, ...hardcodedWebProjects].sort((a, b) => a.order - b.order));
+                setAllGraphicProjects([...adminGraphicProjects, ...hardcodedGraphicProjects].sort((a, b) => a.order - b.order));
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+                // Fallback to hardcoded only
+                setAllWebProjects(hardcodedWebProjects);
+                setAllGraphicProjects(hardcodedGraphicProjects);
+            }
+        }
+
+        fetchProjects();
+    }, []);
 
     return (
         <div>
@@ -193,7 +231,7 @@ export default function PortfolioPage() {
                     </motion.div>
 
                     <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                        {webProjects.map((project, index) => (
+                        {allWebProjects.map((project: any, index: number) => (
                             <motion.div
                                 key={project.id}
                                 className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all group"
@@ -264,7 +302,7 @@ export default function PortfolioPage() {
                     </motion.div>
 
                     <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-                        {graphicProjects.map((project, index) => (
+                        {allGraphicProjects.map((project: any, index: number) => (
                             <motion.div
                                 key={project.id}
                                 className="relative aspect-square bg-light rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all group cursor-pointer"

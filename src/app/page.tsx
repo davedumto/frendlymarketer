@@ -7,7 +7,25 @@ import WhyChooseUsSection from '../components/WhyChooseUsSection';
 import BlogSection from '../components/BlogSection';
 import FinalCTASection from '../components/FinalCTASection';
 import TestimonialSection from '../components/TestimonialSection';
-import { getRecentPosts } from '../lib/api';
+
+// Fetch recent posts from both WordPress and local database
+async function getRecentPosts(count: number) {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/all`, {
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    const allPosts = await response.json();
+    return allPosts.slice(0, count); // Get first N posts (already sorted by date)
+  } catch (error) {
+    console.error('Error fetching recent posts:', error);
+    return [];
+  }
+}
 
 export default async function Home() {
   const posts = await getRecentPosts(3);

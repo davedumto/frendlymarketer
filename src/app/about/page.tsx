@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRightIcon, CheckCircleIcon, Target, Users, Lightbulb, Trophy } from 'lucide-react';
 
+
 export default function AboutPage() {
   return (
     <div>
@@ -210,6 +211,45 @@ export default function AboutPage() {
               <p className="text-gray-700 leading-relaxed">
                 From web design to video production, our creative team brings your brand to life with stunning visuals and compelling content.
               </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet Our Team - White Background */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            <motion.div
+              className="relative min-h-[400px] bg-light rounded-lg flex items-center justify-center"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <Users className="w-48 h-48 text-primary/20" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
+                MEET OUR<br />
+                <span className="text-accent">TEAM</span>
+              </h2>
+              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                Behind every successful project is a team of passionate experts. Get to know the creative minds who bring your vision to life.
+              </p>
+              <Link
+                href="/team"
+                className="inline-flex items-center px-8 py-4 bg-primary text-white font-bold text-lg hover:bg-accent hover:text-primary transition-all"
+              >
+                VIEW OUR TEAM
+                <ArrowRightIcon className="w-5 h-5 ml-2" />
+              </Link>
             </motion.div>
           </div>
         </div>

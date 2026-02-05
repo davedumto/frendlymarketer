@@ -125,3 +125,5 @@ test-results
 *.pem
 *.key
 secrets/
+
+/src/generated/prisma
