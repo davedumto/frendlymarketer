@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { CalendarIcon, UserIcon } from 'lucide-react';
 import prisma from '@/lib/prisma';
 import { getAllPostSlugs as getWordPressPostSlugs } from '../../../lib/api';
+import { getBlogPostBySlug } from '../../../lib/blog';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -29,9 +30,7 @@ export async function generateStaticParams() {
 export default async function BlogPost({ params }: BlogPostPageProps) {
   const { slug } = await params;
 
-  const post = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/unified/${slug}`, {
-    cache: 'no-store',
-  }).then(res => res.ok ? res.json() : null).catch(() => null);
+  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     return (
@@ -81,9 +80,9 @@ export default async function BlogPost({ params }: BlogPostPageProps) {
             Back to Blog
           </Link>
 
-          {post.categories?.nodes?.length > 0 && (
+          {(post.categories?.nodes?.length ?? 0) > 0 && (
             <span className="js-reveal inline-block text-accent/60 text-xs font-semibold tracking-label uppercase mb-6">
-              {post.categories.nodes[0].name}
+              {post.categories?.nodes[0].name}
             </span>
           )}
 
@@ -143,11 +142,11 @@ export default async function BlogPost({ params }: BlogPostPageProps) {
           />
 
           {/* Tags */}
-          {post.tags?.nodes?.length > 0 && (
+          {(post.tags?.nodes?.length ?? 0) > 0 && (
             <div className="mt-16 pt-8 border-t border-primary/10">
               <span className="text-xs font-semibold tracking-label uppercase text-charcoal/40 block mb-4">Tags</span>
               <div className="flex flex-wrap gap-2">
-                {post.tags.nodes.map((tag: any) => (
+                {post.tags?.nodes.map((tag: any) => (
                   <span
                     key={tag.slug}
                     className="px-3 py-1.5 border border-primary/15 text-primary/60 text-xs font-medium hover:border-accent hover:text-accent transition-colors cursor-default"

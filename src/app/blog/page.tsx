@@ -6,16 +6,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CalendarIcon } from 'lucide-react';
 
+import { getAllBlogPosts } from '../../lib/blog';
+
 async function getAllPosts() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/all`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) return [];
-    return await response.json();
-  } catch {
-    return [];
-  }
+  return getAllBlogPosts();
 }
 
 export default async function BlogPage() {
