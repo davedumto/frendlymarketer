@@ -11,14 +11,12 @@ import BlogSection         from '../components/BlogSection';
 import PartnersSection     from '../components/PartnersSection';
 import FinalCTASection     from '../components/FinalCTASection';
 import ScrollReveal        from '../components/ScrollReveal';
+import prisma              from '../lib/prisma';
+import { getAllBlogPosts } from '../lib/blog';
 
 async function getRecentPosts(count: number) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/all`, {
-      cache: 'no-store',
-    });
-    if (!res.ok) return [];
-    const all = await res.json();
+    const all = await getAllBlogPosts();
     return all.slice(0, count);
   } catch {
     return [];
@@ -34,15 +32,11 @@ const hardcodedPartners = [
 
 async function getPartners() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/partners`, {
-      cache: 'no-store',
+    const dbPartners = await prisma.partner.findMany({
+      where: { isActive: true },
+      orderBy: { order: 'asc' },
     });
-    if (!res.ok) return hardcodedPartners;
-    const dbPartners = await res.json();
-    const mapped = dbPartners.map((p: { name: string; logoUrl: string }) => ({
-      name: p.name,
-      src: p.logoUrl,
-    }));
+    const mapped = dbPartners.map((p) => ({ name: p.name, src: p.logoUrl }));
     return [...mapped, ...hardcodedPartners];
   } catch {
     return hardcodedPartners;
@@ -75,12 +69,11 @@ const mockTestimonials = [
 
 async function getTestimonials() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`, {
-      cache: 'no-store',
+    const dbTestimonials = await prisma.testimonial.findMany({
+      where: { isActive: true },
+      orderBy: { order: 'asc' },
     });
-    if (!res.ok) return mockTestimonials;
-    const dbTestimonials = await res.json();
-    const mapped = dbTestimonials.map((t: { id: string; clientName: string; clientPosition: string | null; clientCompany: string | null; content: string; rating: number }) => ({
+    const mapped = dbTestimonials.map((t) => ({
       id: t.id,
       title: t.clientName,
       content: t.content,
