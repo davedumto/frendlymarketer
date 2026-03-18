@@ -1,79 +1,140 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import HeroSection from '../components/HeroSection';
-import ServicesSection from '../components/ServicesSection';
-import WhyChooseUsSection from '../components/WhyChooseUsSection';
-import BlogSection from '../components/BlogSection';
-import FinalCTASection from '../components/FinalCTASection';
-import TestimonialSection from '../components/TestimonialSection';
-import { getRecentPosts } from '../lib/api';
+import Navbar              from '../components/Navbar';
+import Footer              from '../components/Footer';
+import HeroSection         from '../components/HeroSection';
+import MarqueeSection      from '../components/MarqueeSection';
+import ServicesSection     from '../components/ServicesSection';
+import StatsSection        from '../components/StatsSection';
+import WhyChooseUsSection  from '../components/WhyChooseUsSection';
+import TestimonialSection  from '../components/TestimonialSection';
+import BlogSection         from '../components/BlogSection';
+import PartnersSection     from '../components/PartnersSection';
+import FinalCTASection     from '../components/FinalCTASection';
+import ScrollReveal        from '../components/ScrollReveal';
+
+async function getRecentPosts(count: number) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/all`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) return [];
+    const all = await res.json();
+    return all.slice(0, count);
+  } catch {
+    return [];
+  }
+}
+
+const hardcodedPartners = [
+  { name: 'Adonar',           src: '/images/logos/adonar.png' },
+  { name: 'BRV',              src: '/images/logos/brv.png' },
+  { name: 'Connected Africa', src: '/images/logos/connected-africa.png' },
+  { name: 'Frendly Partner',  src: '/images/logos/FRENDLY-PARTNER.webp' },
+];
+
+async function getPartners() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/partners`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) return hardcodedPartners;
+    const dbPartners = await res.json();
+    const mapped = dbPartners.map((p: { name: string; logoUrl: string }) => ({
+      name: p.name,
+      src: p.logoUrl,
+    }));
+    return [...mapped, ...hardcodedPartners];
+  } catch {
+    return hardcodedPartners;
+  }
+}
+
+const mockTestimonials = [
+  {
+    id: 'mock-1',
+    title: 'Bernard',
+    content:
+      'Thanks to the exceptional SEO services provided by Frendly MarQeter, our online visibility skyrocketed. Their strategic approach and attention to detail helped us climb the ranks, driving significant organic traffic to our website.',
+    testimonialFields: { clientName: 'Bernard', clientPosition: 'Founder', clientCompany: '', rating: 5 },
+  },
+  {
+    id: 'mock-2',
+    title: 'Clever',
+    content:
+      "I was thoroughly impressed by Frendly MarQeter's digital marketing expertise! Their creative strategies, timely execution, and clear understanding of our goals helped us reach a wider audience and achieve measurable growth online.",
+    testimonialFields: { clientName: 'Clever', clientPosition: 'Marketing Director', clientCompany: '', rating: 5 },
+  },
+  {
+    id: 'mock-3',
+    title: 'Silvia',
+    content:
+      "Working with Frendly MarQeter on our website development was an absolute pleasure! Their team not only possessed technical prowess but also a keen understanding of our brand and objectives.",
+    testimonialFields: { clientName: 'Silvia', clientPosition: 'CEO', clientCompany: '', rating: 5 },
+  },
+];
+
+async function getTestimonials() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) return mockTestimonials;
+    const dbTestimonials = await res.json();
+    const mapped = dbTestimonials.map((t: { id: string; clientName: string; clientPosition: string | null; clientCompany: string | null; content: string; rating: number }) => ({
+      id: t.id,
+      title: t.clientName,
+      content: t.content,
+      testimonialFields: {
+        clientName: t.clientName,
+        clientPosition: t.clientPosition || undefined,
+        clientCompany: t.clientCompany || undefined,
+        rating: t.rating,
+      },
+    }));
+    return mapped.length > 0 ? [...mapped, ...mockTestimonials] : mockTestimonials;
+  } catch {
+    return mockTestimonials;
+  }
+}
 
 export default async function Home() {
-  const posts = await getRecentPosts(3);
-
-  // Hardcoded testimonials
-  const testimonials = [
-    {
-      id: '1',
-      title: 'Bernard',
-      content: 'Thanks to the exceptional SEO services provided by Frendly MarQeter, our online visibility skyrocketed. Their strategic approach and attention to detail helped us climb the ranks, driving significant organic traffic to our website.',
-      testimonialFields: {
-        clientName: 'Bernard',
-        clientPosition: 'Customer',
-        clientCompany: '',
-        rating: 5
-      }
-    },
-    {
-      id: '2',
-      title: 'Clever',
-      content: 'I was thoroughly impressed by Frendly MarQeter\'s digital marketing expertise! Their creative strategies, timely execution, and clear understanding of our goals helped us reach a wider audience and achieve measurable growth online.',
-      testimonialFields: {
-        clientName: 'Clever',
-        clientPosition: 'Customer',
-        clientCompany: '',
-        rating: 5
-      }
-    },
-    {
-      id: '3',
-      title: 'Silvia',
-      content: 'Working with Frendly MarQeter on our website development was an absolute pleasure! Their team not only possessed technical prowess but also a keen understanding of our brand and objectives.',
-      testimonialFields: {
-        clientName: 'Silvia',
-        clientPosition: 'Customer',
-        clientCompany: '',
-        rating: 5
-      }
-    }
-  ];
+  const [posts, testimonials, partners] = await Promise.all([getRecentPosts(3), getTestimonials(), getPartners()]);
 
   return (
-    <div className="bg-white">
+    <>
+      {/* Vanilla IntersectionObserver — zero UI, activates .js-reveal classes */}
+      <ScrollReveal />
+
       <Navbar isHomepage={true} />
 
-      {/* Hero Section with Video Background */}
+      {/* 1 — Hero */}
       <HeroSection />
 
-      {/* Services Section - Color Block Style */}
+      {/* 2 — Services ticker */}
+      <MarqueeSection />
+
+      {/* 3 — What we do */}
       <ServicesSection />
 
-      {/* Why Choose Us - Split Section */}
+      {/* 4 — Stats strip */}
+      <StatsSection />
+
+      {/* 5 — Partners / clients */}
+      <PartnersSection partners={partners} />
+
+      {/* 6 — Why choose us */}
       <WhyChooseUsSection />
 
-      {/* Blog Section */}
-      <section className="bg-light py-20">
-        <BlogSection posts={posts} />
-      </section>
-
-      {/* Testimonials Section */}
+      {/* 7 — Testimonials */}
       <TestimonialSection testimonials={testimonials} />
 
-      {/* Final CTA Section */}
+      {/* 8 — Blog / Insights */}
+      <BlogSection posts={posts} />
+
+      {/* 9 — Final CTA */}
       <FinalCTASection />
 
       <Footer />
-    </div>
+    </>
   );
 }

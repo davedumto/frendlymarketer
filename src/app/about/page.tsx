@@ -1,240 +1,213 @@
-'use client';
 import React from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import FinalCTASection from '../../components/FinalCTASection';
+import ScrollReveal from '../../components/ScrollReveal';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRightIcon, CheckCircleIcon, Target, Users, Lightbulb, Trophy } from 'lucide-react';
+
+const pillars = [
+  { num: '01', title: 'Strategy First', desc: 'Every campaign starts with rigorous research into your market, audience, and competitors before a single asset is created.' },
+  { num: '02', title: 'Creative Excellence', desc: 'Standout design and content that earns attention in crowded digital spaces — not just impressions, but impact.' },
+  { num: '03', title: 'Measurable Results', desc: 'We track what matters: leads, revenue, and growth — not vanity metrics. Transparent reporting, always.' },
+  { num: '04', title: 'Long-Term Partnerships', desc: 'We build relationships, not transactions. Your success compounds when we grow together over time.' },
+];
+
+const services = [
+  { title: 'Web Development', href: '/services/web-development' },
+  { title: 'Digital Marketing', href: '/services/digital-marketing' },
+  { title: 'SEO', href: '/services/seo' },
+  { title: 'Social Media', href: '/services/social-media' },
+  { title: 'Graphic Design', href: '/services/graphic-design' },
+  { title: 'Video Production', href: '/services/video-production' },
+];
 
 export default function AboutPage() {
   return (
     <div>
+      <ScrollReveal />
       <Navbar />
 
-      {/* Hero Section - Clean with Image */}
-      <section className="pt-24 bg-primary">
-        <div className="grid md:grid-cols-2 min-h-[600px]">
-          {/* Text Side */}
-          <div className="p-12 md:p-20 flex flex-col justify-center text-white">
-            <motion.span
-              className="inline-block text-accent font-bold uppercase text-sm mb-4 tracking-wider w-fit"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+      {/* ── Hero ── */}
+      <section className="bg-dark pt-32 pb-20 relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(211,160,50,0.045) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10 relative">
+          <span className="js-reveal inline-block text-accent/60 text-xs font-semibold tracking-label uppercase mb-8">
+            Who We Are
+          </span>
+          <h1
+            className="js-reveal font-bold leading-[0.88] tracking-display text-white mb-8"
+            style={{ fontSize: 'clamp(3.2rem, 8.5vw, 9rem)' }}
+            data-delay="1"
+          >
+            PARTNERS IN<br />
+            <span className="text-accent">YOUR SUCCESS.</span>
+          </h1>
+          <p className="js-reveal text-white/45 text-base leading-relaxed max-w-md mb-10" data-delay="2">
+            We transform brands through strategic digital marketing that delivers measurable results and sustainable growth.
+          </p>
+          <div className="js-reveal" data-delay="3">
+            <Link
+              href="/consultation"
+              className="btn-shimmer inline-flex items-center gap-3 px-8 py-4 bg-accent text-dark font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-300 group"
             >
-              Who We Are
-            </motion.span>
-
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              WE'RE YOUR<br />
-              <span className="text-accent">PARTNERS IN</span><br />
-              <span className="text-white">SUCCESS.</span>
-            </motion.h1>
-
-            <motion.p
-              className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              Join us on a journey of change and growth. We transform brands through strategic digital marketing that delivers measurable results.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Link
-                href="/consultation"
-                className="inline-flex items-center px-8 py-4 bg-accent text-primary font-bold text-lg hover:bg-white hover:text-primary transition-all w-fit"
-              >
-                GET STARTED
-                <ArrowRightIcon className="w-5 h-5 ml-2" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Image Side */}
-          <div className="relative min-h-[600px] bg-white">
-            <Image
-              src="/images/brand-identity.png"
-              alt="About Us"
-              fill
-              className="object-cover"
-            />
+              Get Started
+              <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Our Mission - Split Section */}
-      <section className="bg-white">
-        <div className="grid md:grid-cols-2">
-          {/* Image Side */}
-          <div className="relative min-h-[500px] bg-light">
-            <div className="absolute inset-0 flex items-center justify-center p-12">
-              <Target className="w-64 h-64 text-primary/20" />
+      {/* ── Full-bleed image strip ── */}
+      <div className="relative h-[55vh] min-h-[320px] max-h-[520px] bg-charcoal overflow-hidden">
+        <Image
+          src="/images/brand-identity.png"
+          alt="About Frendly Marqeter"
+          fill
+          className="object-cover opacity-80"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/50 to-transparent" />
+      </div>
+
+      {/* ── Mission statement ── */}
+      <section className="bg-white py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+            <div className="js-reveal">
+              <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">Our Mission</span>
+              <h2
+                className="font-bold leading-[0.9] tracking-display text-primary"
+                style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+              >
+                EMPOWER. GROW.<br />DELIVER.
+              </h2>
+            </div>
+            <div className="js-reveal" data-delay="2">
+              <p className="text-charcoal/70 text-lg leading-relaxed mb-6">
+                To empower businesses with innovative digital marketing solutions that drive growth, enhance brand visibility, and create lasting connections with their audience.
+              </p>
+              <p className="text-charcoal/70 text-lg leading-relaxed">
+                We believe in delivering measurable results through data-driven strategies, creative excellence, and unwavering commitment to our clients&apos; success.
+              </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Text Side */}
-          <div className="p-12 md:p-20 flex flex-col justify-center bg-white">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-primary">
-              Our Mission
+      {/* ── Our pillars ── */}
+      <section className="bg-light py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="js-reveal mb-16">
+            <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">What We Stand For</span>
+            <h2
+              className="font-bold leading-[0.9] tracking-display text-primary"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+            >
+              HOW WE WORK.
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              To empower businesses with innovative digital marketing solutions that drive growth, enhance brand visibility, and create lasting connections with their audience.
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              We believe in delivering measurable results through data-driven strategies, creative excellence, and unwavering commitment to our clients' success.
-            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 border-t border-primary/15">
+            {pillars.map((item) => (
+              <div key={item.num} className="js-reveal border-b border-primary/15 md:odd:border-r py-8 px-0 md:even:pl-10 md:odd:pr-10">
+                <span className="text-accent/50 text-xs font-semibold tracking-label uppercase block mb-3">{item.num}</span>
+                <h3 className="text-lg font-bold text-primary mb-2">{item.title}</h3>
+                <p className="text-charcoal/60 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us - Color Blocks */}
-      <section className="py-0">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4">
-          {/* Block 1 - Teal */}
-          <motion.div
-            className="bg-primary text-white p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <Users className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Expert Team</h3>
-            <p className="text-white/90">
-              Dedicated professionals with years of experience in digital marketing and brand strategy.
-            </p>
-          </motion.div>
-
-          {/* Block 2 - White */}
-          <motion.div
-            className="bg-white text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-100"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <Lightbulb className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Creative Solutions</h3>
-            <p className="text-primary/80">
-              Innovative ideas that capture attention and deliver results beyond expectations.
-            </p>
-          </motion.div>
-
-          {/* Block 3 - Gold */}
-          <motion.div
-            className="bg-accent text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <Trophy className="w-12 h-12 text-white mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Proven Results</h3>
-            <p className="text-primary/90">
-              Track record of delivering measurable growth and ROI for 250+ brands worldwide.
-            </p>
-          </motion.div>
-
-          {/* Block 4 - Cream */}
-          <motion.div
-            className="bg-light text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-gray-200"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <CheckCircleIcon className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Client-Focused</h3>
-            <p className="text-primary/80">
-              Your success is our priority. We build partnerships, not just business relationships.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* What We Do - Cream Background */}
-      <section className="py-20 bg-light">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              WHAT WE DO
+      {/* ── Services overview ── */}
+      <section className="bg-white py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="js-reveal mb-16">
+            <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">What We Do</span>
+            <h2
+              className="font-bold leading-[0.9] tracking-display text-primary"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+            >
+              FULL-SERVICE<br />DIGITAL AGENCY.
             </h2>
-            <div className="w-24 h-1 bg-accent mx-auto mt-4" />
-          </motion.div>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Card 1 */}
-            <motion.div
-              className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-2xl font-bold text-primary mb-4">
-                Strategy & Planning
-              </h3>
-              <p className="text-gray-700 leading-relaxed">
-                We develop comprehensive digital marketing strategies tailored to your business goals, ensuring every campaign is data-driven and results-focused.
-              </p>
-            </motion.div>
-
-            {/* Card 2 */}
-            <motion.div
-              className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-2xl font-bold text-primary mb-4">
-                Creative Execution
-              </h3>
-              <p className="text-gray-700 leading-relaxed">
-                From web design to video production, our creative team brings your brand to life with stunning visuals and compelling content.
-              </p>
-            </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 border-t border-primary/15">
+            {services.map((service, i) => (
+              <Link
+                key={service.title}
+                href={service.href}
+                className="js-reveal group border-b border-r border-primary/15 lg:[&:nth-child(3n)]:border-r-0 md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r py-8 px-6 first:pl-0 flex items-center justify-between"
+                data-delay={String((i % 3) + 1)}
+              >
+                <span className="text-lg font-bold text-primary group-hover:text-accent transition-colors duration-300">{service.title}</span>
+                <svg className="w-4 h-4 text-accent/40 group-hover:text-accent group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA - Gold Background */}
-      <section className="bg-accent text-primary py-32">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-            READY TO GROW<br />
-            <span className="text-white">YOUR BUSINESS?</span>
-          </h2>
-          <p className="text-xl text-primary/80 mb-12 max-w-2xl mx-auto">
-            Let's create something extraordinary together. Book your free consultation today.
-          </p>
-          <Link
-            href="/consultation"
-            className="inline-flex items-center justify-center px-12 py-5 bg-primary text-white font-bold text-lg hover:bg-white hover:text-primary transition-all group"
-          >
-            Book Free Consultation
-            <ArrowRightIcon className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
-          </Link>
+      {/* ── Team teaser ── */}
+      <section className="bg-primary py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="js-reveal">
+              <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-6">The People Behind The Work</span>
+              <h2
+                className="font-bold leading-[0.9] tracking-display text-white mb-6"
+                style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+              >
+                MEET OUR<br /><span className="text-accent">TEAM.</span>
+              </h2>
+              <p className="text-white/50 text-base leading-relaxed mb-10 max-w-sm">
+                Behind every successful project is a team of passionate experts. Get to know the creative minds who bring your vision to life.
+              </p>
+              <Link
+                href="/team"
+                className="btn-shimmer inline-flex items-center gap-3 px-8 py-4 bg-accent text-dark font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-300 group"
+              >
+                View Our Team
+                <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+            <div className="js-reveal" data-delay="2">
+              <div className="grid grid-cols-3 gap-1">
+                {[
+                  { label: '10+', sub: 'Years Experience' },
+                  { label: '250+', sub: 'Brands Served' },
+                  { label: '98%', sub: 'Client Retention' },
+                ].map((stat) => (
+                  <div key={stat.label} className="bg-white/5 border border-white/10 p-6 text-center">
+                    <span
+                      className="block font-bold leading-none tracking-display text-accent"
+                      style={{ fontSize: 'clamp(1.8rem, 3vw, 3rem)' }}
+                    >
+                      {stat.label}
+                    </span>
+                    <span className="text-white/40 text-xs tracking-label uppercase mt-2 block">{stat.sub}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
+      <FinalCTASection />
       <Footer />
     </div>
   );

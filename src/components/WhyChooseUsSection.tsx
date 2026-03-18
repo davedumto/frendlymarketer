@@ -1,62 +1,92 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRightIcon } from 'lucide-react';
+
+const points = [
+  {
+    title: 'Dedicated digital experts',
+    body:  'A cross-disciplinary team of strategists, designers, and engineers fully committed to your growth.',
+  },
+  {
+    title: 'Data-driven by default',
+    body:  "Every decision is grounded in analytics — no guesswork, only strategies that move the needle.",
+  },
+  {
+    title: 'Transparent at every step',
+    body:  "You always know what we're doing and why. Clear reporting, honest timelines, no surprises.",
+  },
+];
 
 export default function WhyChooseUsSection() {
   return (
-    <section className="bg-white">
-      <div className="grid md:grid-cols-2">
-        {/* Text Side - BOLD TEAL */}
-        <div className="p-12 md:p-20 flex flex-col justify-center bg-primary text-white">
-          <span className="text-accent font-bold uppercase text-sm mb-4 tracking-wider">
-            Why Choose Us
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
-            We're More Than<br />
-            Just an Agency
-          </h2>
-          <p className="text-white/90 text-lg mb-8 leading-relaxed">
-            We're your partners in success. With a track record of delivering exceptional results, we've helped countless businesses thrive in the digital landscape.
-          </p>
-          <ul className="space-y-4 mb-8">
-            <li className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-primary text-sm font-bold">✓</span>
+    <section className="bg-light py-24 lg:py-32">
+      <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+
+        {/* Two-column grid: heading left, content right */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+
+          {/* Left — editorial heading */}
+          <div className="lg:sticky lg:top-32">
+            <span className="js-reveal-left block text-primary/45 text-xs font-semibold tracking-label uppercase mb-6">
+              Why Choose Us
+            </span>
+
+            <h2
+              className="js-reveal-left font-bold leading-[0.9] tracking-display text-dark mb-8"
+              style={{ fontSize: 'clamp(2.6rem, 5.5vw, 5.5rem)' }}
+              data-delay="1"
+            >
+              MORE THAN<br />
+              JUST AN<br />
+              <span className="text-primary">AGENCY.</span>
+            </h2>
+
+            <div className="js-reveal-left mb-8" data-delay="2">
+              <div className="line-reveal h-px w-16 bg-primary/30" />
+            </div>
+
+            <p className="js-reveal-left text-charcoal/50 text-sm leading-relaxed max-w-xs" data-delay="3">
+              We're your partners in success. With a track record of delivering exceptional results,
+              we've helped countless businesses thrive in the digital landscape.
+            </p>
+          </div>
+
+          {/* Right — feature points */}
+          <div className="space-y-0">
+            {points.map((pt, i) => (
+              <div
+                key={i}
+                className="js-reveal-right py-8 border-t border-charcoal/[0.08] first:border-t-0"
+                data-delay={String(i + 1)}
+              >
+                <div className="flex gap-6">
+                  <span className="flex-shrink-0 text-xs font-bold text-primary/40 tracking-widest pt-0.5 w-6">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <h4 className="font-semibold text-dark text-base mb-2">{pt.title}</h4>
+                    <p className="text-charcoal/50 text-sm leading-relaxed">{pt.body}</p>
+                  </div>
+                </div>
               </div>
-              <span className="text-white">Dedicated team of digital experts</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-primary text-sm font-bold">✓</span>
-              </div>
-              <span className="text-white">Data-driven strategies that deliver results</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-primary text-sm font-bold">✓</span>
-              </div>
-              <span className="text-white">Transparent communication & reporting</span>
-            </li>
-          </ul>
-          <Link
-            href="/about"
-            className="inline-flex items-center text-accent font-bold hover:gap-3 transition-all w-fit text-lg"
-          >
-            Learn About Us
-            <ArrowRightIcon className="w-5 h-5 ml-2" />
-          </Link>
+            ))}
+
+            <div className="js-reveal-right pt-10 border-t border-charcoal/[0.08]" data-delay="4">
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-3 text-primary font-semibold text-sm tracking-wide group hover:text-dark transition-colors duration-200"
+              >
+                Learn about us
+                <svg
+                  className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
         </div>
 
-        {/* Image Side - Full Image */}
-        <div className="relative min-h-[500px] bg-white">
-          <Image
-            src="/images/brand-identity.png"
-            alt="Brand Identity"
-            fill
-            className="object-cover"
-          />
-        </div>
       </div>
     </section>
   );

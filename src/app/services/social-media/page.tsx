@@ -1,248 +1,139 @@
-'use client';
 import React from 'react';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import FinalCTASection from '../../../components/FinalCTASection';
+import ScrollReveal from '../../../components/ScrollReveal';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRightIcon, CheckCircleIcon, Share2, Heart, MessageCircle, TrendingUp } from 'lucide-react';
+
+const deliverables = [
+  { num: '01', title: 'Instagram Marketing', desc: 'Visually compelling content and strategy for maximum reach.' },
+  { num: '02', title: 'Facebook Advertising', desc: 'Precision-targeted paid campaigns that drive real business outcomes.' },
+  { num: '03', title: 'LinkedIn Strategy', desc: 'B2B positioning and thought leadership that opens doors.' },
+  { num: '04', title: 'TikTok Content', desc: 'Short-form video strategy built for the algorithm and your audience.' },
+  { num: '05', title: 'Twitter / X Management', desc: 'Real-time engagement and brand voice consistency at scale.' },
+  { num: '06', title: 'YouTube Optimisation', desc: 'Channel growth and video SEO to expand your long-form reach.' },
+];
+
+const process = [
+  { num: '01', title: 'Analysis', desc: 'Audit your current presence and map the competitive landscape.' },
+  { num: '02', title: 'Planning', desc: 'Develop a content calendar and platform-specific engagement strategies.' },
+  { num: '03', title: 'Creation', desc: 'Produce high-quality, on-brand content across all platforms.' },
+  { num: '04', title: 'Optimisation', desc: 'Monitor performance metrics and iterate for better results each week.' },
+];
 
 export default function SocialMediaPage() {
   return (
     <div>
+      <ScrollReveal />
       <Navbar />
 
-      {/* Hero Section - Split Layout */}
-      <section className="pt-24 bg-primary">
-        <div className="grid md:grid-cols-2 min-h-[600px]">
-          {/* Text Side */}
-          <div className="p-12 md:p-20 flex flex-col justify-center text-white">
-            <motion.span
-              className="inline-block text-accent font-bold uppercase text-sm mb-4 tracking-wider w-fit"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              Social Media Marketing
-            </motion.span>
-
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              BUILD<br />
-              <span className="text-accent">COMMUNITIES THAT</span><br />
-              <span className="text-white">CONVERT.</span>
-            </motion.h1>
-
-            <motion.p
-              className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              Grow your brand presence and engage your audience with strategic social media marketing that drives real business results.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Link
-                href="/consultation"
-                className="inline-flex items-center px-8 py-4 bg-accent text-primary font-bold text-lg hover:bg-white hover:text-primary transition-all w-fit"
-              >
-                GROW YOUR COMMUNITY
-                <ArrowRightIcon className="w-5 h-5 ml-2" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Image Side */}
-          <div className="relative min-h-[600px] bg-white">
-            <Image
-              src="/images/Social Media Photo 221179.jpg"
-              alt="Social Media Marketing"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Features - Color Blocks */}
-      <section className="py-0">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4">
-          {/* Block 1 - Teal */}
-          <motion.div
-            className="bg-primary text-white p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+      {/* ── Hero ── */}
+      <section className="bg-dark pt-32 pb-20 relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(211,160,50,0.045) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10 relative">
+          <span className="js-reveal inline-block text-accent/60 text-xs font-semibold tracking-label uppercase mb-8">
+            Social Media Marketing
+          </span>
+          <h1
+            className="js-reveal font-bold leading-[0.88] tracking-display text-white mb-8"
+            style={{ fontSize: 'clamp(3.2rem, 8.5vw, 9rem)' }}
+            data-delay="1"
           >
-            <Share2 className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Strategic Content</h3>
-            <p className="text-white/90">
-              Engaging posts that align with your brand voice and business goals.
-            </p>
-          </motion.div>
-
-          {/* Block 2 - White */}
-          <motion.div
-            className="bg-white text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-100"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <MessageCircle className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Community Management</h3>
-            <p className="text-primary/80">
-              Active engagement and relationship building with your audience.
-            </p>
-          </motion.div>
-
-          {/* Block 3 - Gold */}
-          <motion.div
-            className="bg-accent text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <TrendingUp className="w-12 h-12 text-white mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Growth Focused</h3>
-            <p className="text-primary/90">
-              Data-driven strategies to grow your followers and engagement.
-            </p>
-          </motion.div>
-
-          {/* Block 4 - Cream */}
-          <motion.div
-            className="bg-light text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-gray-200"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <Heart className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Authentic Engagement</h3>
-            <p className="text-primary/80">
-              Real connections that build trust and drive conversions.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* What We Offer - Cream Background */}
-      <section className="py-20 bg-light">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              PLATFORM MANAGEMENT
-            </h2>
-            <div className="w-24 h-1 bg-accent mx-auto mt-4" />
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              "Instagram Marketing",
-              "Facebook Advertising", 
-              "LinkedIn Strategy",
-              "TikTok Content",
-              "Twitter Management",
-              "YouTube Optimization"
-            ].map((service, index) => (
-              <motion.div
-                key={index}
-                className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-all"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <CheckCircleIcon className="w-8 h-8 text-primary mb-4" />
-                <h3 className="text-xl font-bold text-primary mb-2">{service}</h3>
-                <p className="text-gray-700">Tailored strategies for each platform's unique audience.</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section - White Background */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              OUR STRATEGY
-            </h2>
-            <div className="w-24 h-1 bg-accent mx-auto mt-4" />
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {[
-              { step: "01", title: "Analysis", description: "Audit your current presence and competitor landscape." },
-              { step: "02", title: "Planning", description: "Develop content calendar and engagement strategies." },
-              { step: "03", title: "Creation", description: "Produce high-quality, engaging content for all platforms." },
-              { step: "04", title: "Optimization", description: "Monitor performance and optimize for better results." }
-            ].map((process, index) => (
-              <motion.div
-                key={index}
-                className="text-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl font-bold text-primary">{process.step}</span>
-                </div>
-                <h3 className="text-2xl font-bold text-primary mb-4">{process.title}</h3>
-                <p className="text-gray-700 leading-relaxed">{process.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA - Gold Background */}
-      <section className="bg-accent text-primary py-32">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-            READY TO<br />
-            <span className="text-white">GO SOCIAL?</span>
-          </h2>
-          <p className="text-xl text-primary/80 mb-12 max-w-2xl mx-auto">
-            Let's build a community that loves your brand. Book your free social media strategy session today.
+            BUILD COMMUNITIES<br />
+            <span className="text-accent">THAT CONVERT.</span>
+          </h1>
+          <p className="js-reveal text-white/45 text-base leading-relaxed max-w-md mb-10" data-delay="2">
+            Grow your brand presence and engage your audience with strategic social media that drives real business results.
           </p>
-          <Link
-            href="/consultation"
-            className="inline-flex items-center justify-center px-12 py-5 bg-primary text-white font-bold text-lg hover:bg-white hover:text-primary transition-all group"
-          >
-            Book Free Consultation
-            <ArrowRightIcon className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div className="js-reveal" data-delay="3">
+            <Link
+              href="/consultation"
+              className="btn-shimmer inline-flex items-center gap-3 px-8 py-4 bg-accent text-dark font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-300 group"
+            >
+              Grow Your Community
+              <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 
+      {/* ── Full-bleed image strip ── */}
+      <div className="relative h-[55vh] min-h-[320px] max-h-[520px] bg-charcoal overflow-hidden">
+        <Image
+          src="/images/Social Media Photo 221179.jpg"
+          alt="Social Media Marketing"
+          fill
+          className="object-cover opacity-80"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/40 to-transparent" />
+      </div>
+
+      {/* ── What we deliver ── */}
+      <section className="bg-light py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="js-reveal mb-16">
+            <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">Platform Management</span>
+            <h2
+              className="font-bold leading-[0.9] tracking-display text-primary"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+            >
+              EVERY PLATFORM,<br />MASTERED.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 border-t border-primary/15">
+            {deliverables.map((item) => (
+              <div key={item.num} className="js-reveal border-b border-primary/15 md:odd:border-r py-8 px-0 md:even:pl-10 md:odd:pr-10">
+                <span className="text-accent/50 text-xs font-semibold tracking-label uppercase block mb-3">{item.num}</span>
+                <h3 className="text-lg font-bold text-primary mb-2">{item.title}</h3>
+                <p className="text-charcoal/60 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Process ── */}
+      <section className="bg-white py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="js-reveal mb-16">
+            <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">Our Strategy</span>
+            <h2
+              className="font-bold leading-[0.9] tracking-display text-primary"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+            >
+              THE PLAYBOOK.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 border-t border-primary/15">
+            {process.map((step) => (
+              <div key={step.num} className="js-reveal border-b md:border-b-0 md:border-r border-primary/15 last:border-r-0 py-10 px-0 md:px-8 first:pl-0">
+                <span
+                  className="block font-bold leading-none tracking-display text-primary/10 mb-6"
+                  style={{ fontSize: 'clamp(3rem, 5vw, 5rem)' }}
+                >
+                  {step.num}
+                </span>
+                <h3 className="text-xl font-bold text-primary mb-3">{step.title}</h3>
+                <p className="text-charcoal/55 text-sm leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <FinalCTASection />
       <Footer />
     </div>
   );
