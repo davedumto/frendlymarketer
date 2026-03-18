@@ -11,8 +11,7 @@ export default function HeroSection() {
           autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/hero.mov" type="video/mp4" />
-          <source src="/hero.mov" type="video/quicktime" />
+          <source src="/hero.mp4" type="video/mp4" />
         </video>
         {/* Gradient: heavy bottom-left for text legibility, transparent top-right */}
         <div className="absolute inset-0 bg-gradient-to-br from-dark/90 via-dark/70 to-dark/40" />
