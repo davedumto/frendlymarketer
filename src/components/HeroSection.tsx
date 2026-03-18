@@ -10,9 +10,9 @@ export default function HeroSection() {
         <video
           autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          poster="/images/brand-identity.png"
         >
-          <source src="/images/4K Digital Agency Video (1).mp4" type="video/mp4" />
+          <source src="/hero.mov" type="video/mp4" />
+          <source src="/hero.mov" type="video/quicktime" />
         </video>
         {/* Gradient: heavy bottom-left for text legibility, transparent top-right */}
         <div className="absolute inset-0 bg-gradient-to-br from-dark/90 via-dark/70 to-dark/40" />
@@ -29,7 +29,7 @@ export default function HeroSection() {
           {/* Headline */}
           <div className="flex-1">
             <span className="hero-label inline-block mb-7 text-accent/80 text-xs font-semibold tracking-label uppercase">
-              Digital Marketing Agency
+              Digital Marketing Partners
             </span>
 
             <h1

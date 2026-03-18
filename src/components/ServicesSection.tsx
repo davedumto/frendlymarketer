@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -56,6 +56,26 @@ const services = [
 
 export default function ServicesSection() {
   const [active, setActive] = useState(0);
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Scroll-driven activation — mobile/tablet only
+  // rootMargin carves out a central band so only one item activates at a time,
+  // and it works correctly for both up and down scrolling.
+  useEffect(() => {
+    if (window.matchMedia('(min-width: 1024px)').matches) return;
+
+    const observers: IntersectionObserver[] = [];
+    rowRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(i); },
+        { threshold: 0, rootMargin: '-38% 0px -38% 0px' }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
 
   return (
     <section className="bg-light py-24 lg:py-32">
@@ -88,78 +108,90 @@ export default function ServicesSection() {
             {services.map((service, i) => {
               const isActive = active === i;
               return (
-                <Link
+                <div
                   key={service.num}
-                  href={service.href}
-                  onMouseEnter={() => setActive(i)}
-                  className={`group flex items-center gap-6 md:gap-10 px-0 py-6 md:py-7 border-t first:border-t-0 transition-colors duration-300 ${
+                  ref={(el) => { rowRefs.current[i] = el; }}
+                  className={`border-t first:border-t-0 transition-all duration-300 ${
                     isActive
-                      ? 'border-primary/20 bg-primary -mx-6 px-6 md:-mx-10 md:px-10'
+                      ? 'border-primary/20 bg-primary lg:bg-transparent'
                       : 'border-charcoal/[0.08]'
                   }`}
-                  style={{ textDecoration: 'none' }}
                 >
-                  {/* Number */}
-                  <span
-                    className={`flex-shrink-0 text-xs font-bold tracking-widest w-8 transition-colors duration-300 ${
-                      isActive ? 'text-accent/60' : 'text-primary/35'
+                  <Link
+                    href={service.href}
+                    onMouseEnter={() => setActive(i)}
+                    className={`group flex items-center gap-5 md:gap-10 py-6 md:py-7 transition-all duration-300 ${
+                      isActive ? 'px-4 lg:px-6 lg:-mx-6 lg:bg-primary xl:px-10 xl:-mx-10' : ''
                     }`}
+                    style={{ textDecoration: 'none' }}
                   >
-                    {service.num}
-                  </span>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0 overflow-hidden">
-                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                      <h3
-                        className={`font-bold tracking-display leading-none transition-colors duration-300 ${
-                          isActive ? 'text-white' : 'text-dark'
-                        }`}
-                        style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)' }}
+                    {/* Number */}
+                    <span
+                      className={`flex-shrink-0 text-xs font-bold tracking-widest w-8 transition-colors duration-300 ${
+                        isActive ? 'text-accent/70' : 'text-primary/35'
+                      }`}
+                    >
+                      {service.num}
+                    </span>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                        <h3
+                          className={`font-bold tracking-display leading-none transition-colors duration-300 ${
+                            isActive ? 'text-white' : 'text-dark'
+                          }`}
+                          style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)' }}
+                        >
+                          {service.title}
+                        </h3>
+                        <span
+                          className={`text-[11px] font-semibold tracking-label uppercase transition-colors duration-300 ${
+                            isActive ? 'text-white/45' : 'text-charcoal/35'
+                          }`}
+                        >
+                          {service.sub}
+                        </span>
+                      </div>
+
+                      {/* Description — expands on active */}
+                      <div
+                        style={{
+                          maxHeight: isActive ? '80px' : '0',
+                          opacity: isActive ? 1 : 0,
+                          overflow: 'hidden',
+                          transition: 'max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease',
+                        }}
                       >
-                        {service.title}
-                      </h3>
-                      <span
-                        className={`text-[11px] font-semibold tracking-label uppercase transition-colors duration-300 ${
-                          isActive ? 'text-white/45' : 'text-charcoal/35'
-                        }`}
-                      >
-                        {service.sub}
-                      </span>
+                        <p
+                          className={`text-sm leading-relaxed mt-2.5 pr-8 transition-colors duration-300 ${
+                            isActive ? 'text-white/60' : 'text-charcoal/60'
+                          }`}
+                        >
+                          {service.desc}
+                        </p>
+                      </div>
                     </div>
 
-                    {/* Description — expands on active */}
+                    {/* Arrow */}
                     <div
+                      className="flex-shrink-0"
                       style={{
-                        maxHeight: isActive ? '64px' : '0',
                         opacity: isActive ? 1 : 0,
-                        overflow: 'hidden',
-                        transition: 'max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease',
+                        transform: isActive ? 'translate(4px, -4px)' : 'translate(0,0)',
+                        transition: 'opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1)',
                       }}
                     >
-                      <p className="text-white/60 text-sm leading-relaxed mt-2.5 pr-8">
-                        {service.desc}
-                      </p>
+                      <svg
+                        className="w-5 h-5 text-accent"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
                     </div>
-                  </div>
-
-                  {/* Arrow */}
-                  <div
-                    className="flex-shrink-0"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                      transform: isActive ? 'translate(4px, -4px)' : 'translate(0,0)',
-                      transition: 'opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1)',
-                    }}
-                  >
-                    <svg
-                      className="w-5 h-5 text-accent"
-                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               );
             })}
           </div>
@@ -167,8 +199,6 @@ export default function ServicesSection() {
           {/* ── Image panel — sticky, desktop only ── */}
           <div className="hidden lg:block sticky top-28 self-start">
             <div className="relative overflow-hidden bg-charcoal/5" style={{ aspectRatio: '3/4' }}>
-
-              {/* All images stacked, only active is visible */}
               {services.map((service, i) => (
                 <Image
                   key={service.num}
@@ -184,8 +214,6 @@ export default function ServicesSection() {
                   priority={i === 0}
                 />
               ))}
-
-              {/* Bottom overlay — service info */}
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-dark/75 to-transparent pointer-events-none">
                 <p className="text-white/45 text-[11px] tracking-label uppercase font-semibold mb-1">
                   {services[active].sub}
@@ -195,8 +223,6 @@ export default function ServicesSection() {
                 </p>
               </div>
             </div>
-
-            {/* Bottom CTA below image */}
             <div className="mt-6">
               <Link
                 href="/services"
