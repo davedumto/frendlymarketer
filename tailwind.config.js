@@ -8,9 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#0F5E70', // teal
-        'accent': '#D3A032', // golden yellow
-        'light': '#F3F1E0', // cream
+        'primary':      '#0F5E70', // teal
+        'accent':       '#D3A032', // golden yellow
+        'light':        '#F3F1E0', // cream
+        'charcoal':     '#2C2C2C', // dark text
+        'dark':         '#071e24', // near-black teal (hero, dark sections)
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],

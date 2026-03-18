@@ -8,6 +8,7 @@ export async function GET() {
     const teamMembers = await prisma.teamMember.findMany({
       where: { isActive: true },
       orderBy: { order: 'asc' },
+      include: { department: { select: { id: true, name: true, order: true } } },
     });
 
     return NextResponse.json(teamMembers);
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, role, description, image, instagram, linkedin, order } = body;
+    const { name, role, description, image, instagram, linkedin, order, departmentId } = body;
 
     if (!name || !role || !description) {
       return NextResponse.json(
@@ -47,7 +48,9 @@ export async function POST(request: NextRequest) {
         instagram: instagram || null,
         linkedin: linkedin || null,
         order: order || 0,
+        departmentId: departmentId || null,
       },
+      include: { department: { select: { id: true, name: true, order: true } } },
     });
 
     return NextResponse.json(teamMember, { status: 201 });

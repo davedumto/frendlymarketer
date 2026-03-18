@@ -39,14 +39,14 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
     const { id } = await params;
     const body = await request.json();
-    const { name, role, description, image, instagram, linkedin, order, isActive } = body;
+    const { name, role, description, image, instagram, linkedin, order, isActive, departmentId } = body;
 
     const existing = await prisma.teamMember.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json({ error: 'Team member not found' }, { status: 404 });
     }
 
-    const teamMember = await prisma.teamMember.update({
+    await prisma.teamMember.update({
       where: { id },
       data: {
         ...(name !== undefined && { name }),
@@ -57,7 +57,13 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         ...(linkedin !== undefined && { linkedin }),
         ...(order !== undefined && { order }),
         ...(isActive !== undefined && { isActive }),
+        ...(departmentId !== undefined && { departmentId: departmentId || null }),
       },
+    });
+
+    const teamMember = await prisma.teamMember.findUnique({
+      where: { id },
+      include: { department: { select: { id: true, name: true, order: true } } },
     });
 
     return NextResponse.json(teamMember);

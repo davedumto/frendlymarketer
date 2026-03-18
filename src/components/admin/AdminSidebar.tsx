@@ -9,6 +9,8 @@ import {
   Users,
   FileText,
   FolderOpen,
+  MessageSquare,
+  Handshake,
   LogOut,
   Menu,
   X,
@@ -24,6 +26,8 @@ const navItems = [
   { href: '/admin/team', label: 'Team', icon: Users },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/portfolio', label: 'Portfolio', icon: FolderOpen },
+  { href: '/admin/testimonials', label: 'Testimonials', icon: MessageSquare },
+  { href: '/admin/partners', label: 'Partners', icon: Handshake },
 ];
 
 export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {

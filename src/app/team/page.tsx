@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import FinalCTASection from '../../components/FinalCTASection';
+import ScrollReveal from '../../components/ScrollReveal';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRightIcon, Instagram, Linkedin, Users, Heart, Sparkles, Target, Loader2 } from 'lucide-react';
+import { Instagram, Linkedin } from 'lucide-react';
 
+interface Department { id: string; name: string; order: number; }
 interface TeamMember {
   id: string;
   name: string;
@@ -15,333 +17,240 @@ interface TeamMember {
   image: string | null;
   instagram: string | null;
   linkedin: string | null;
+  departmentId: string | null;
+  department: Department | null;
 }
 
 export default function TeamPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchTeamMembers() {
+    async function fetchAll() {
       try {
-        const response = await fetch('/api/team');
-        if (response.ok) {
-          const data = await response.json();
-          setTeamMembers(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch team members:', error);
+        const [memberRes, deptRes] = await Promise.all([fetch('/api/team'), fetch('/api/departments')]);
+        if (memberRes.ok) setTeamMembers(await memberRes.json());
+        if (deptRes.ok) setDepartments(await deptRes.json());
+      } catch {
+        // silently fall through to empty state
       } finally {
         setIsLoading(false);
       }
     }
-
-    fetchTeamMembers();
+    fetchAll();
   }, []);
 
   return (
     <div>
+      <ScrollReveal />
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="pt-24 bg-primary">
-        <div className="grid md:grid-cols-2 min-h-[600px]">
-          {/* Text Side */}
-          <div className="p-12 md:p-20 flex flex-col justify-center text-white">
-            <motion.span
-              className="inline-block text-accent font-bold uppercase text-sm mb-4 tracking-wider w-fit"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+      {/* ── Hero ── */}
+      <section className="bg-dark pt-32 pb-20 relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(211,160,50,0.045) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10 relative">
+          <span className="js-reveal inline-block text-accent/60 text-xs font-semibold tracking-label uppercase mb-8">
+            Our Team
+          </span>
+          <h1
+            className="js-reveal font-bold leading-[0.88] tracking-display text-white mb-8"
+            style={{ fontSize: 'clamp(3.2rem, 8.5vw, 9rem)' }}
+            data-delay="1"
+          >
+            MEET THE<br />
+            <span className="text-accent">CREATIVE MINDS.</span>
+          </h1>
+          <p className="js-reveal text-white/45 text-base leading-relaxed max-w-md mb-10" data-delay="2">
+            A passionate team of digital experts dedicated to transforming your brand and driving your business forward.
+          </p>
+          <div className="js-reveal" data-delay="3">
+            <Link
+              href="/consultation"
+              className="btn-shimmer inline-flex items-center gap-3 px-8 py-4 bg-accent text-dark font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-300 group"
             >
-              Our Team
-            </motion.span>
-
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              MEET THE<br />
-              <span className="text-accent">CREATIVE</span><br />
-              <span className="text-white">MINDS.</span>
-            </motion.h1>
-
-            <motion.p
-              className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              A passionate team of digital experts dedicated to transforming your brand and driving your business forward.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Link
-                href="/consultation"
-                className="inline-flex items-center px-8 py-4 bg-accent text-primary font-bold text-lg hover:bg-white hover:text-primary transition-all w-fit"
-              >
-                WORK WITH US
-                <ArrowRightIcon className="w-5 h-5 ml-2" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Image Side */}
-          <div className="relative min-h-[600px] bg-light flex items-center justify-center">
-            <Users className="w-64 h-64 text-primary/20" />
+              Work With Us
+              <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Values - Color Blocks */}
-      <section className="py-0">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4">
-          {/* Block 1 - Teal */}
-          <motion.div
-            className="bg-primary text-white p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <Users className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Collaborative</h3>
-            <p className="text-white/90">
-              We work together, combining diverse skills to deliver exceptional results.
-            </p>
-          </motion.div>
-
-          {/* Block 2 - White */}
-          <motion.div
-            className="bg-white text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-100"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <Sparkles className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Innovative</h3>
-            <p className="text-primary/80">
-              Pushing boundaries and exploring new ideas to stay ahead of the curve.
-            </p>
-          </motion.div>
-
-          {/* Block 3 - Gold */}
-          <motion.div
-            className="bg-accent text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <Heart className="w-12 h-12 text-white mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Passionate</h3>
-            <p className="text-primary/90">
-              Genuine love for what we do drives us to deliver our best every time.
-            </p>
-          </motion.div>
-
-          {/* Block 4 - Cream */}
-          <motion.div
-            className="bg-light text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-gray-200"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <Target className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Results-Driven</h3>
-            <p className="text-primary/80">
-              Focused on achieving measurable outcomes that matter to your business.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Team Members Grid */}
-      <section className="py-20 bg-light">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              THE TEAM
+      {/* ── Team members grouped by department ── */}
+      <section className="bg-light py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="js-reveal mb-16">
+            <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">The People</span>
+            <h2
+              className="font-bold leading-[0.9] tracking-display text-primary"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+            >
+              THE TEAM.
             </h2>
-            <div className="w-24 h-1 bg-accent mx-auto mt-4" />
-            <p className="text-lg text-gray-700 mt-6 max-w-2xl mx-auto">
-              Get to know the talented individuals who make the magic happen at Frendly Marqeter.
-            </p>
-          </motion.div>
+          </div>
 
           {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-12 h-12 text-primary animate-spin" />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-primary/10 border border-primary/10">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="bg-white animate-pulse">
+                  <div className="aspect-[5/6] bg-primary/5" />
+                  <div className="p-8 space-y-3">
+                    <div className="h-4 bg-primary/5 rounded w-3/4" />
+                    <div className="h-3 bg-primary/5 rounded w-1/2" />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : teamMembers.length === 0 ? (
-            <div className="text-center py-12">
-              <Users className="w-24 h-24 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">Our team page is being updated. Check back soon!</p>
+            <div className="text-center py-24 border border-primary/10">
+              <span className="text-primary/20 text-6xl font-bold tracking-display block mb-6">FM</span>
+              <p className="text-charcoal/40 text-sm tracking-label uppercase">Our team page is being updated. Check back soon.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {teamMembers.map((member, index) => (
-                <motion.div
-                  key={member.id}
-                  className="bg-white overflow-hidden shadow-md hover:shadow-xl transition-all group"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -5 }}
-                >
-                  {/* Member Image */}
-                  <div className="relative aspect-[5/7] overflow-hidden bg-gray-200">
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-primary/10">
-                        <Users className="w-24 h-24 text-primary/30" />
+            <div className="space-y-20">
+              {[
+                ...departments.map(dept => ({
+                  key: dept.id,
+                  label: dept.name,
+                  members: teamMembers.filter(m => m.departmentId === dept.id),
+                })),
+                {
+                  key: 'unassigned',
+                  label: null,
+                  members: teamMembers.filter(m => !m.departmentId),
+                },
+              ].filter(group => group.members.length > 0).map(group => (
+                <div key={group.key}>
+                  {/* Section heading */}
+                  {group.label && (
+                    <div className="js-reveal flex items-center gap-6 mb-10">
+                      <div>
+                        <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-1">Department</span>
+                        <h3
+                          className="font-bold leading-none tracking-display text-primary"
+                          style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)' }}
+                        >
+                          {group.label.toUpperCase()}
+                        </h3>
                       </div>
-                    )}
-
-                    {/* Social Links Overlay */}
-                    <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                      {member.instagram && (
-                        <a
-                          href={member.instagram}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 bg-white rounded-full text-primary hover:bg-accent hover:text-white transition-colors"
-                          aria-label={`${member.name}'s Instagram`}
-                        >
-                          <Instagram className="w-6 h-6" />
-                        </a>
-                      )}
-                      {member.linkedin && (
-                        <a
-                          href={member.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 bg-white rounded-full text-primary hover:bg-accent hover:text-white transition-colors"
-                          aria-label={`${member.name}'s LinkedIn`}
-                        >
-                          <Linkedin className="w-6 h-6" />
-                        </a>
-                      )}
+                      <div className="flex-1 h-px bg-primary/10" />
                     </div>
-                  </div>
+                  )}
 
-                  {/* Member Info */}
-                  <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-primary mb-1 group-hover:text-accent transition-colors">
-                      {member.name}
-                    </h3>
-                    <p className="text-accent font-semibold text-sm mb-3 uppercase tracking-wide">
-                      {member.role}
-                    </p>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {member.description}
-                    </p>
+                  {/* Members grid */}
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-primary/10 border border-primary/10">
+                    {group.members.map((member, index) => (
+                      <div
+                        key={member.id}
+                        className="js-reveal bg-white group overflow-hidden"
+                        data-delay={String((index % 3) + 1)}
+                      >
+                        {/* Photo */}
+                        <div className="relative aspect-[5/6] overflow-hidden bg-primary/5">
+                          {member.image ? (
+                            <Image
+                              src={member.image}
+                              alt={member.name}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-700"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-primary/15 font-bold tracking-display" style={{ fontSize: '4rem' }}>FM</span>
+                            </div>
+                          )}
+                          {(member.instagram || member.linkedin) && (
+                            <div className="absolute inset-0 bg-primary/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
+                              <div className="flex gap-3">
+                                {member.instagram && (
+                                  <a href={member.instagram} target="_blank" rel="noopener noreferrer"
+                                    className="p-3 border border-white/20 text-white hover:bg-accent hover:border-accent hover:text-dark transition-colors duration-200"
+                                    aria-label={`${member.name} on Instagram`}>
+                                    <Instagram className="w-4 h-4" />
+                                  </a>
+                                )}
+                                {member.linkedin && (
+                                  <a href={member.linkedin} target="_blank" rel="noopener noreferrer"
+                                    className="p-3 border border-white/20 text-white hover:bg-accent hover:border-accent hover:text-dark transition-colors duration-200"
+                                    aria-label={`${member.name} on LinkedIn`}>
+                                    <Linkedin className="w-4 h-4" />
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        {/* Info */}
+                        <div className="p-8 border-t border-primary/10">
+                          <h3 className="text-lg font-bold text-primary mb-1 group-hover:text-accent transition-colors duration-300">{member.name}</h3>
+                          <span className="text-accent/70 text-xs font-semibold tracking-label uppercase block mb-3">{member.role}</span>
+                          <p className="text-charcoal/55 text-sm leading-relaxed">{member.description}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Join the Team CTA */}
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-                WANT TO<br />
-                <span className="text-accent">JOIN US?</span>
+      {/* ── Join the team ── */}
+      <section className="bg-white py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div className="js-reveal">
+              <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">Careers</span>
+              <h2
+                className="font-bold leading-[0.9] tracking-display text-primary mb-6"
+                style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+              >
+                WANT TO<br /><span className="text-accent">JOIN US?</span>
               </h2>
-              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                We're always looking for talented individuals who share our passion for digital excellence. If you think you'd be a great fit, we'd love to hear from you.
+              <p className="text-charcoal/60 text-base leading-relaxed mb-10 max-w-sm">
+                We&apos;re always looking for talented individuals who share our passion for digital excellence. If that&apos;s you, let&apos;s talk.
               </p>
               <Link
                 href="/consultation"
-                className="inline-flex items-center px-8 py-4 bg-primary text-white font-bold text-lg hover:bg-accent hover:text-primary transition-all"
+                className="btn-shimmer inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-semibold text-sm tracking-wide hover:bg-accent hover:text-dark transition-colors duration-300 group"
               >
-                GET IN TOUCH
-                <ArrowRightIcon className="w-5 h-5 ml-2" />
+                Get In Touch
+                <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </Link>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="bg-light p-12 rounded-lg"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-2xl font-bold text-primary mb-6">What We Value</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <span className="w-2 h-2 bg-accent rounded-full mt-2 mr-3 shrink-0"></span>
-                  <span className="text-gray-700">Creativity and out-of-the-box thinking</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="w-2 h-2 bg-accent rounded-full mt-2 mr-3 shrink-0"></span>
-                  <span className="text-gray-700">Strong communication and collaboration</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="w-2 h-2 bg-accent rounded-full mt-2 mr-3 shrink-0"></span>
-                  <span className="text-gray-700">Continuous learning and growth mindset</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="w-2 h-2 bg-accent rounded-full mt-2 mr-3 shrink-0"></span>
-                  <span className="text-gray-700">Commitment to delivering quality work</span>
-                </li>
+            <div className="js-reveal border border-primary/15 p-10" data-delay="2">
+              <h3 className="text-lg font-bold text-primary mb-6">What We Value</h3>
+              <ul className="space-y-5">
+                {[
+                  'Creativity and out-of-the-box thinking',
+                  'Strong communication and collaboration',
+                  'Continuous learning and growth mindset',
+                  'Commitment to delivering quality work',
+                ].map((value) => (
+                  <li key={value} className="flex items-start gap-4">
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0" />
+                    <span className="text-charcoal/65 text-sm leading-relaxed">{value}</span>
+                  </li>
+                ))}
               </ul>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="bg-accent text-primary py-32">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-            LET'S CREATE<br />
-            <span className="text-white">TOGETHER.</span>
-          </h2>
-          <p className="text-xl text-primary/80 mb-12 max-w-2xl mx-auto">
-            Our team is ready to bring your vision to life. Start your project with us today.
-          </p>
-          <Link
-            href="/consultation"
-            className="inline-flex items-center justify-center px-12 py-5 bg-primary text-white font-bold text-lg hover:bg-white hover:text-primary transition-all group"
-          >
-            Book Free Consultation
-            <ArrowRightIcon className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-      </section>
-
+      <FinalCTASection />
       <Footer />
     </div>
   );

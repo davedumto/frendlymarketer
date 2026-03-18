@@ -1,248 +1,139 @@
-'use client';
 import React from 'react';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import FinalCTASection from '../../../components/FinalCTASection';
+import ScrollReveal from '../../../components/ScrollReveal';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRightIcon, CheckCircleIcon, Search, TrendingUp, Target, Award } from 'lucide-react';
+
+const deliverables = [
+  { num: '01', title: 'Technical SEO Audits', desc: 'Find and fix the site issues holding back your rankings.' },
+  { num: '02', title: 'Keyword Research', desc: 'Identify high-intent terms your ideal customers are searching for.' },
+  { num: '03', title: 'On-Page Optimisation', desc: 'Title tags, content structure, and internal linking done right.' },
+  { num: '04', title: 'Link Building', desc: 'Earn authoritative backlinks that signal trust to search engines.' },
+  { num: '05', title: 'Local SEO', desc: 'Dominate local search results and Google Maps for your area.' },
+  { num: '06', title: 'Content Optimisation', desc: 'Make existing content work harder with targeted improvements.' },
+];
+
+const process = [
+  { num: '01', title: 'Audit', desc: 'Comprehensive analysis of your current SEO performance and gaps.' },
+  { num: '02', title: 'Research', desc: 'In-depth keyword and competitor research to inform strategy.' },
+  { num: '03', title: 'Optimise', desc: 'Implement technical, on-page, and off-page improvements.' },
+  { num: '04', title: 'Monitor', desc: 'Track rankings and refine the strategy for continuous growth.' },
+];
 
 export default function SEOPage() {
   return (
     <div>
+      <ScrollReveal />
       <Navbar />
 
-      {/* Hero Section - Split Layout */}
-      <section className="pt-24 bg-primary">
-        <div className="grid md:grid-cols-2 min-h-[600px]">
-          {/* Text Side */}
-          <div className="p-12 md:p-20 flex flex-col justify-center text-white">
-            <motion.span
-              className="inline-block text-accent font-bold uppercase text-sm mb-4 tracking-wider w-fit"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              SEO Services
-            </motion.span>
-
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              DOMINATE<br />
-              <span className="text-accent">SEARCH RANKINGS &</span><br />
-              <span className="text-white">DRIVE TRAFFIC.</span>
-            </motion.h1>
-
-            <motion.p
-              className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              Increase your organic visibility and attract qualified leads with proven SEO strategies that deliver long-term results.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Link
-                href="/consultation"
-                className="inline-flex items-center px-8 py-4 bg-accent text-primary font-bold text-lg hover:bg-white hover:text-primary transition-all w-fit"
-              >
-                RANK HIGHER
-                <ArrowRightIcon className="w-5 h-5 ml-2" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Image Side */}
-          <div className="relative min-h-[600px] bg-white">
-            <Image
-              src="/images/SEO Stock Photo Goumbik.jpg"
-              alt="SEO Services"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Features - Color Blocks */}
-      <section className="py-0">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4">
-          {/* Block 1 - Teal */}
-          <motion.div
-            className="bg-primary text-white p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+      {/* ── Hero ── */}
+      <section className="bg-dark pt-32 pb-20 relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(211,160,50,0.045) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10 relative">
+          <span className="js-reveal inline-block text-accent/60 text-xs font-semibold tracking-label uppercase mb-8">
+            SEO Services
+          </span>
+          <h1
+            className="js-reveal font-bold leading-[0.88] tracking-display text-white mb-8"
+            style={{ fontSize: 'clamp(3.2rem, 8.5vw, 9rem)' }}
+            data-delay="1"
           >
-            <Search className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Keyword Mastery</h3>
-            <p className="text-white/90">
-              Target the right keywords to attract your ideal customers.
-            </p>
-          </motion.div>
-
-          {/* Block 2 - White */}
-          <motion.div
-            className="bg-white text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-100"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <TrendingUp className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Organic Growth</h3>
-            <p className="text-primary/80">
-              Sustainable traffic growth that compounds over time.
-            </p>
-          </motion.div>
-
-          {/* Block 3 - Gold */}
-          <motion.div
-            className="bg-accent text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <Target className="w-12 h-12 text-white mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Targeted Traffic</h3>
-            <p className="text-primary/90">
-              High-intent visitors actively searching for your solutions.
-            </p>
-          </motion.div>
-
-          {/* Block 4 - Cream */}
-          <motion.div
-            className="bg-light text-primary p-8 md:p-12 min-h-[300px] flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-gray-200"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <Award className="w-12 h-12 text-accent mb-4" />
-            <h3 className="text-2xl font-bold mb-3">Authority Building</h3>
-            <p className="text-primary/80">
-              Establish your brand as the go-to expert in your industry.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* What We Offer - Cream Background */}
-      <section className="py-20 bg-light">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              SEO SOLUTIONS
-            </h2>
-            <div className="w-24 h-1 bg-accent mx-auto mt-4" />
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              "Technical SEO Audits",
-              "Keyword Research", 
-              "On-Page Optimization",
-              "Link Building",
-              "Local SEO",
-              "Content Optimization"
-            ].map((service, index) => (
-              <motion.div
-                key={index}
-                className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-all"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <CheckCircleIcon className="w-8 h-8 text-primary mb-4" />
-                <h3 className="text-xl font-bold text-primary mb-2">{service}</h3>
-                <p className="text-gray-700">Comprehensive SEO services that improve your search rankings.</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section - White Background */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              SEO METHODOLOGY
-            </h2>
-            <div className="w-24 h-1 bg-accent mx-auto mt-4" />
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {[
-              { step: "01", title: "Audit", description: "Comprehensive analysis of your current SEO performance." },
-              { step: "02", title: "Research", description: "In-depth keyword and competitor research for strategy." },
-              { step: "03", title: "Optimize", description: "Implement technical, on-page, and off-page improvements." },
-              { step: "04", title: "Monitor", description: "Track rankings and refine strategy for continuous growth." }
-            ].map((process, index) => (
-              <motion.div
-                key={index}
-                className="text-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl font-bold text-primary">{process.step}</span>
-                </div>
-                <h3 className="text-2xl font-bold text-primary mb-4">{process.title}</h3>
-                <p className="text-gray-700 leading-relaxed">{process.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA - Gold Background */}
-      <section className="bg-accent text-primary py-32">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-            READY TO<br />
-            <span className="text-white">RANK #1?</span>
-          </h2>
-          <p className="text-xl text-primary/80 mb-12 max-w-2xl mx-auto">
-            Let's boost your search rankings and drive organic traffic that converts. Book your free SEO audit today.
+            RANK HIGHER.<br />
+            <span className="text-accent">GROW FASTER.</span>
+          </h1>
+          <p className="js-reveal text-white/45 text-base leading-relaxed max-w-md mb-10" data-delay="2">
+            Proven SEO strategies that increase organic visibility, attract qualified leads, and deliver long-term results.
           </p>
-          <Link
-            href="/consultation"
-            className="inline-flex items-center justify-center px-12 py-5 bg-primary text-white font-bold text-lg hover:bg-white hover:text-primary transition-all group"
-          >
-            Book Free Consultation
-            <ArrowRightIcon className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div className="js-reveal" data-delay="3">
+            <Link
+              href="/consultation"
+              className="btn-shimmer inline-flex items-center gap-3 px-8 py-4 bg-accent text-dark font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-300 group"
+            >
+              Rank Higher
+              <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 
+      {/* ── Full-bleed image strip ── */}
+      <div className="relative h-[55vh] min-h-[320px] max-h-[520px] bg-charcoal overflow-hidden">
+        <Image
+          src="/images/SEO Stock Photo Goumbik.jpg"
+          alt="SEO Services"
+          fill
+          className="object-cover opacity-80"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/40 to-transparent" />
+      </div>
+
+      {/* ── What we deliver ── */}
+      <section className="bg-light py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="js-reveal mb-16">
+            <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">SEO Solutions</span>
+            <h2
+              className="font-bold leading-[0.9] tracking-display text-primary"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+            >
+              VISIBILITY THAT<br />COMPOUNDS.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 border-t border-primary/15">
+            {deliverables.map((item) => (
+              <div key={item.num} className="js-reveal border-b border-primary/15 md:odd:border-r py-8 px-0 md:even:pl-10 md:odd:pr-10">
+                <span className="text-accent/50 text-xs font-semibold tracking-label uppercase block mb-3">{item.num}</span>
+                <h3 className="text-lg font-bold text-primary mb-2">{item.title}</h3>
+                <p className="text-charcoal/60 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Process ── */}
+      <section className="bg-white py-24">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+          <div className="js-reveal mb-16">
+            <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-4">SEO Methodology</span>
+            <h2
+              className="font-bold leading-[0.9] tracking-display text-primary"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
+            >
+              THE SYSTEM.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 border-t border-primary/15">
+            {process.map((step) => (
+              <div key={step.num} className="js-reveal border-b md:border-b-0 md:border-r border-primary/15 last:border-r-0 py-10 px-0 md:px-8 first:pl-0">
+                <span
+                  className="block font-bold leading-none tracking-display text-primary/10 mb-6"
+                  style={{ fontSize: 'clamp(3rem, 5vw, 5rem)' }}
+                >
+                  {step.num}
+                </span>
+                <h3 className="text-xl font-bold text-primary mb-3">{step.title}</h3>
+                <p className="text-charcoal/55 text-sm leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <FinalCTASection />
       <Footer />
     </div>
   );

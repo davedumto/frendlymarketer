@@ -1,0 +1,342 @@
+/* ============================================================
+   FRENDLY MARKETER — LANDING PAGE CUSTOM STYLES
+   Interactions via CSS only. No animation libraries.
+   ============================================================ */
+
+:root {
+  --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-circ:    cubic-bezier(0, 0.55, 0.45, 1);
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.site-nav {
+  animation: nav-slide-in 0.9s var(--ease-expo) 0.05s both;
+  transition: background-color 0.4s ease,
+              box-shadow 0.4s ease,
+              padding-top 0.3s ease,
+              padding-bottom 0.3s ease;
+}
+
+@keyframes nav-slide-in {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Mobile menu */
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s var(--ease-expo),
+              opacity 0.25s ease;
+}
+.mobile-menu.is-open {
+  max-height: 520px;
+  opacity: 1;
+}
+
+/* Services dropdown */
+.nav-dropdown {
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.22s ease,
+              transform 0.28s var(--ease-expo);
+}
+.nav-dropdown.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ============================================================
+   HERO — PURE CSS TEXT REVEAL
+   ============================================================ */
+.hero-line-wrap {
+  display: block;
+  overflow: hidden;
+}
+
+@keyframes line-up {
+  from { transform: translateY(108%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes fade-up-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-line-1 { animation: line-up      1.1s var(--ease-expo)  0.18s both; }
+.hero-line-2 { animation: line-up      1.1s var(--ease-expo)  0.34s both; }
+.hero-line-3 { animation: line-up      1.1s var(--ease-expo)  0.50s both; }
+.hero-label  { animation: fade-up-in   0.7s var(--ease-expo)  0.05s both; }
+.hero-sub    { animation: fade-up-in   0.75s var(--ease-expo) 0.72s both; }
+.hero-cta    { animation: fade-up-in   0.75s var(--ease-expo) 0.88s both; }
+.hero-scroll { animation: fade-up-in   0.75s var(--ease-expo) 1.10s both; }
+
+@keyframes scroll-pulse {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  60%      { transform: translateY(6px); opacity: 0.15; }
+}
+.scroll-indicator { animation: scroll-pulse 2s ease-in-out infinite; }
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+@keyframes marquee-loop {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-loop 32s linear infinite;
+}
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   SCROLL REVEAL (JS attaches .is-visible)
+   ============================================================ */
+.js-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.85s var(--ease-expo),
+              transform 0.85s var(--ease-expo);
+}
+.js-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.85s var(--ease-expo),
+              transform 0.85s var(--ease-expo);
+}
+.js-reveal-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.js-reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.85s var(--ease-expo),
+              transform 0.85s var(--ease-expo);
+}
+.js-reveal-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delay helpers */
+[data-delay="1"] { transition-delay: 0.10s !important; }
+[data-delay="2"] { transition-delay: 0.20s !important; }
+[data-delay="3"] { transition-delay: 0.30s !important; }
+[data-delay="4"] { transition-delay: 0.40s !important; }
+[data-delay="5"] { transition-delay: 0.50s !important; }
+[data-delay="6"] { transition-delay: 0.60s !important; }
+[data-delay="7"] { transition-delay: 0.70s !important; }
+
+/* Line expand (for decorative rules) */
+.line-reveal {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.9s var(--ease-expo);
+}
+.is-visible .line-reveal,
+.line-reveal.is-visible {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   SERVICES ROWS
+   ============================================================ */
+.service-row {
+  display: block;
+  border-top: 1px solid rgba(15, 94, 112, 0.14);
+  transition: background-color 0.32s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+.service-row:last-of-type { border-bottom: 1px solid rgba(15, 94, 112, 0.14); }
+
+.service-row-num {
+  transition: color 0.32s ease;
+}
+.service-row-title {
+  transition: color 0.32s ease;
+}
+.service-row-sub {
+  transition: color 0.32s ease;
+}
+
+.service-row-desc {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.42s var(--ease-expo),
+              opacity 0.28s ease;
+  pointer-events: none;
+}
+
+.service-row-arrow {
+  opacity: 0;
+  transition: transform 0.35s var(--ease-expo),
+              opacity 0.28s ease;
+}
+
+.service-row:hover {
+  background-color: #0F5E70;
+}
+.service-row:hover .service-row-num   { color: rgba(211, 160, 50, 0.65); }
+.service-row:hover .service-row-title { color: #ffffff; }
+.service-row:hover .service-row-sub   { color: rgba(255,255,255,0.55); }
+.service-row:hover .service-row-desc  { max-height: 72px; opacity: 1; }
+.service-row:hover .service-row-arrow { opacity: 1; transform: translate(4px, -4px); }
+
+/* ============================================================
+   PARTNER LOGOS — CAROUSEL
+   ============================================================ */
+@keyframes partner-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.partner-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  /* Soft edge fade */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.partner-carousel-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  will-change: transform;
+  animation: partner-scroll 38s linear infinite;
+}
+
+.partner-carousel-wrapper:hover .partner-carousel-track {
+  animation-play-state: paused;
+}
+
+.partner-logo-img {
+  filter: grayscale(1) opacity(0.4);
+  transition: filter 0.45s var(--ease-expo), transform 0.45s var(--ease-expo);
+}
+.partner-logo:hover .partner-logo-img {
+  filter: grayscale(0) opacity(1);
+  transform: scale(1.06);
+}
+
+/* ============================================================
+   BLOG CARDS
+   ============================================================ */
+.blog-card {
+  transition: transform 0.45s var(--ease-expo);
+}
+.blog-card:hover { transform: translateY(-8px); }
+
+.blog-card-img { overflow: hidden; }
+.blog-card-img img {
+  transition: transform 0.6s var(--ease-expo);
+}
+.blog-card:hover .blog-card-img img { transform: scale(1.06); }
+
+/* ============================================================
+   TESTIMONIAL CARDS
+   ============================================================ */
+.testimonial-card {
+  transition: transform 0.45s var(--ease-expo),
+              border-color 0.3s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  border-left-color: #D3A032;
+}
+
+/* ============================================================
+   STAT NUMBERS
+   ============================================================ */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   CTA SECTION — BUTTON SHIMMER
+   ============================================================ */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: translateX(-200%);
+  transition: transform 0.7s var(--ease-expo);
+  pointer-events: none;
+}
+.btn-shimmer:hover::after {
+  transform: translateX(350%);
+}
+
+/* ============================================================
+   SUBTLE GRAIN OVERLAY FOR HERO
+   ============================================================ */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* ============================================================
+   TESTIMONIAL CAROUSEL — quote fade on slide
+   ============================================================ */
+@keyframes quote-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+blockquote[key] {
+  animation: quote-fade-in 0.45s var(--ease-expo) both;
+}
+
+/* ============================================================
+   TYPOGRAPHY HELPERS
+   ============================================================ */
+.text-balance { text-wrap: balance; }
+.tracking-display { letter-spacing: -0.03em; }
+.tracking-label  { letter-spacing: 0.14em; }

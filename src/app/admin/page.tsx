@@ -3,7 +3,7 @@
 import React from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import Link from 'next/link';
-import { Users, FileText, FolderOpen, ArrowRight } from 'lucide-react';
+import { Users, FileText, FolderOpen, MessageSquare, Handshake, ArrowRight } from 'lucide-react';
 
 const quickLinks = [
   {
@@ -25,6 +25,20 @@ const quickLinks = [
     description: 'Update web and graphic projects',
     href: '/admin/portfolio',
     icon: FolderOpen,
+    color: 'bg-primary',
+  },
+  {
+    title: 'Manage Testimonials',
+    description: 'Add and manage client testimonials',
+    href: '/admin/testimonials',
+    icon: MessageSquare,
+    color: 'bg-accent',
+  },
+  {
+    title: 'Manage Partners',
+    description: 'Add partner logos to the homepage carousel',
+    href: '/admin/partners',
+    icon: Handshake,
     color: 'bg-primary',
   },
 ];
@@ -69,47 +83,7 @@ export default function AdminDashboardPage() {
           })}
         </div>
 
-        {/* Getting Started */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-primary mb-4">
-            Getting Started
-          </h2>
-          <div className="space-y-4 text-gray-700">
-            <div className="flex items-start gap-3">
-              <span className="w-6 h-6 bg-accent text-primary rounded-full flex items-center justify-center text-sm font-bold shrink-0">
-                1
-              </span>
-              <div>
-                <p className="font-medium">Set up your database</p>
-                <p className="text-sm text-gray-500">
-                  Run <code className="bg-gray-100 px-2 py-1 rounded">npx prisma db push</code> to create the database tables
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="w-6 h-6 bg-accent text-primary rounded-full flex items-center justify-center text-sm font-bold shrink-0">
-                2
-              </span>
-              <div>
-                <p className="font-medium">Create your first admin account</p>
-                <p className="text-sm text-gray-500">
-                  Use the API endpoint <code className="bg-gray-100 px-2 py-1 rounded">POST /api/auth/register</code> to create an admin
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="w-6 h-6 bg-accent text-primary rounded-full flex items-center justify-center text-sm font-bold shrink-0">
-                3
-              </span>
-              <div>
-                <p className="font-medium">Add team members</p>
-                <p className="text-sm text-gray-500">
-                  Navigate to the Team section to add your team members
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </AdminLayout>
   );

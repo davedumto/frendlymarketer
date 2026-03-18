@@ -1,25 +1,19 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ScrollReveal from '../../components/ScrollReveal';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRightIcon, CalendarIcon } from 'lucide-react';
+import { CalendarIcon } from 'lucide-react';
 
-// Fetch all posts from both WordPress and local database
 async function getAllPosts() {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/all`, {
-      cache: 'no-store', // Always fetch fresh data
+      cache: 'no-store',
     });
-
-    if (!response.ok) {
-      console.error('Failed to fetch posts');
-      return [];
-    }
-
+    if (!response.ok) return [];
     return await response.json();
-  } catch (error) {
-    console.error('Error fetching posts:', error);
+  } catch {
     return [];
   }
 }
@@ -32,92 +26,108 @@ export default async function BlogPage() {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
-  const stripHtml = (html: string) => {
-    return html.replace(/<[^>]*>/g, '');
-  };
+  const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '');
 
-  const getImageUrl = (post: any) => {
-    return post.featuredImage?.node.sourceUrl || '';
-  };
+  const getImageUrl = (post: any) => post.featuredImage?.node.sourceUrl || '';
 
   return (
     <div>
+      <ScrollReveal />
       <Navbar />
-      <main className="py-20 bg-light min-h-screen">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
-              Our Blog
-            </h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Insights, trends, and thought leadership from our digital marketing experts
-            </p>
-            <div className="w-24 h-1 bg-accent mx-auto mt-6" />
-          </div>
 
-          {/* Blog Grid */}
+      {/* ── Hero ── */}
+      <section className="bg-dark pt-32 pb-20 relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(211,160,50,0.045) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10 relative">
+          <span className="js-reveal inline-block text-accent/60 text-xs font-semibold tracking-label uppercase mb-8">
+            Insights &amp; Ideas
+          </span>
+          <h1
+            className="js-reveal font-bold leading-[0.88] tracking-display text-white mb-4"
+            style={{ fontSize: 'clamp(3.2rem, 8.5vw, 9rem)' }}
+            data-delay="1"
+          >
+            THE BLOG.
+          </h1>
+          <p className="js-reveal text-white/45 text-base leading-relaxed max-w-md" data-delay="2">
+            Thought leadership and practical insights from our digital marketing experts.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Blog grid ── */}
+      <main className="bg-light py-24 min-h-[40vh]">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
           {posts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              {posts.map((post: any) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {posts.map((post: any, index: number) => (
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group"
+                  className="js-reveal group bg-white hover:bg-light border border-primary/10 transition-colors duration-300 flex flex-col"
+                  data-delay={String((index % 3) + 1)}
                 >
-                  <div className="bg-white  overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                    {/* Image */}
-                    <div className="h-56 overflow-hidden relative bg-gray-100">
+                  {/* Image */}
+                  <div className="relative h-52 overflow-hidden bg-gray-100 flex-shrink-0">
+                    {getImageUrl(post) ? (
                       <Image
                         src={getImageUrl(post)}
                         alt={post.featuredImage?.node.altText || post.title}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
+                    ) : (
+                      <div className="absolute inset-0 bg-primary/10 flex items-center justify-center">
+                        <span className="text-primary/20 text-5xl font-bold tracking-display">FM</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-8 flex-1 flex flex-col">
+                    <div className="flex items-center gap-3 mb-4 text-xs text-charcoal/40">
+                      <CalendarIcon className="w-3.5 h-3.5" />
+                      <span>{formatDate(post.date)}</span>
+                      {post.categories?.nodes?.length > 0 && (
+                        <span className="text-accent/70 font-semibold tracking-label uppercase">
+                          {post.categories.nodes[0].name}
+                        </span>
+                      )}
                     </div>
 
-                    {/* Content */}
-                    <div className="p-6 flex-1 flex flex-col">
-                      {/* Date and Categories */}
-                      <div className="flex items-center gap-3 mb-3 text-sm text-gray-500">
-                        <div className="flex items-center gap-1">
-                          <CalendarIcon className="w-4 h-4" />
-                          <span>{formatDate(post.date)}</span>
-                        </div>
-                        {post.categories && post.categories.nodes.length > 0 && (
-                          <span className="px-2 py-1 bg-primary/10 text-primary rounded-full text-xs">
-                            {post.categories.nodes[0].name}
-                          </span>
-                        )}
-                      </div>
+                    <h2 className="text-xl font-bold text-primary mb-3 leading-snug line-clamp-2 group-hover:text-accent transition-colors duration-300">
+                      {post.title}
+                    </h2>
 
-                      {/* Title */}
-                      <h2 className="text-xl font-semibold text-charcoal mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                        {post.title}
-                      </h2>
+                    <p className="text-charcoal/55 text-sm leading-relaxed line-clamp-3 flex-1 mb-6">
+                      {stripHtml(post.excerpt)}
+                    </p>
 
-                      {/* Excerpt */}
-                      <p className="text-gray-600 mb-4 line-clamp-3 flex-1">
-                        {stripHtml(post.excerpt)}
-                      </p>
-
-                      {/* Read More Link */}
-                      <div className="inline-flex items-center text-primary font-medium group-hover:text-accent transition-colors">
-                        Read more
-                        <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </div>
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-label uppercase text-primary group-hover:text-accent transition-colors duration-300">
+                      Read More
+                      <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
           ) : (
-            <div className="text-center py-20">
-              <p className="text-gray-600 text-lg">No blog posts found.</p>
+            <div className="text-center py-24 border border-primary/10">
+              <span className="text-primary/20 text-6xl font-bold tracking-display block mb-6">FM</span>
+              <p className="text-charcoal/40 text-sm tracking-label uppercase">No posts yet — check back soon.</p>
             </div>
           )}
         </div>
       </main>
+
       <Footer />
     </div>
   );
