@@ -51,7 +51,7 @@ export default function Navbar({ isHomepage = false }: NavbarProps) {
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-screen-xl mx-auto px-6 lg:px-10 flex items-center justify-between">
+      <div className="w-full px-6 lg:px-10 xl:px-16 flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/" className="flex items-center flex-shrink-0">
@@ -136,7 +136,7 @@ export default function Navbar({ isHomepage = false }: NavbarProps) {
 
       {/* Mobile menu */}
       <div className={`mobile-menu md:hidden bg-white border-t border-gray-100 ${mobileOpen ? 'is-open' : ''}`}>
-        <div className="max-w-screen-xl mx-auto px-6 py-5 flex flex-col gap-1">
+        <div className="w-full px-6 py-5 flex flex-col gap-1">
           <Link href="/about" className="py-2.5 text-sm font-medium text-charcoal hover:text-primary transition-colors">
             Who We Are
           </Link>
