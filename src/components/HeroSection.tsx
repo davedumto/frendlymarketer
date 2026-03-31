@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function HeroSection() {
   return (
-    <section className="relative lg:min-h-screen flex flex-col bg-dark overflow-hidden">
+    <section className="relative lg:min-h-screen flex flex-col bg-dark">
 
       {/* Subtle dot-grid texture on the left side only */}
       <div
