@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col bg-dark overflow-hidden">
+    <section className="relative lg:min-h-screen flex flex-col bg-dark overflow-hidden">
 
       {/* Subtle dot-grid texture on the left side only */}
       <div
@@ -15,10 +15,10 @@ export default function HeroSection() {
       />
 
       {/* ── Main grid: text left / video right ── */}
-      <div className="flex-1 grid lg:grid-cols-[1fr_50%] xl:grid-cols-[1fr_52%] min-h-screen">
+      <div className="flex-1 grid lg:grid-cols-[1fr_50%] xl:grid-cols-[1fr_52%] lg:min-h-screen">
 
         {/* ──────────── LEFT: Content ──────────── */}
-        <div className="relative flex flex-col justify-center px-6 lg:px-10 xl:px-16 pb-10 lg:pb-16 md:pb-24 pt-8 lg:pt-36 lg:md:pt-44 z-10">
+        <div className="relative flex flex-col justify-center px-6 lg:px-10 xl:px-16 pb-10 lg:pb-16 md:pb-24 pt-2 lg:pt-36 z-10">
 
           {/* Thin vertical accent rule — desktop separator */}
           <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
