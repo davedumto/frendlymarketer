@@ -55,8 +55,6 @@ export default function TestimonialSection({ testimonials = [] }: TestimonialSec
               CLIENTS<br />
               <span className="text-primary">SAY.</span>
             </h2>
-
-            <Link2 href="/about" label="All reviews →" />
           </div>
 
           {/* Right — single quote with nav */}
@@ -122,24 +120,5 @@ export default function TestimonialSection({ testimonials = [] }: TestimonialSec
 
       </div>
     </section>
-  );
-}
-
-// Small internal link component to avoid importing anything extra
-function Link2({ href, label }: { href: string; label: string }) {
-  return (
-    <a
-      href={href}
-      className="js-reveal inline-flex items-center gap-2 text-primary text-sm font-semibold hover:text-dark transition-colors duration-200 group"
-      data-delay="2"
-    >
-      {label}
-      <svg
-        className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-      </svg>
-    </a>
   );
 }

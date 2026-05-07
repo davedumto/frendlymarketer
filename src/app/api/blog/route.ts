@@ -1,71 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { authenticateRequest } from '@/lib/auth';
-
-// Transform local blog post to WordPress-compatible format
-interface LocalBlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  excerpt: string | null;
-  coverImage: string | null;
-  author: string;
-  category: string | null;
-  tags: string[];
-  isPublished: boolean;
-  publishedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-function toWordPressFormat(post: LocalBlogPost) {
-  return {
-    id: post.id,
-    title: post.title,
-    slug: post.slug,
-    excerpt: post.excerpt || '',
-    content: post.content,
-    date: (post.publishedAt || post.createdAt).toISOString(),
-    featuredImage: post.coverImage
-      ? {
-        node: {
-          sourceUrl: post.coverImage,
-          altText: post.title,
-        },
-      }
-      : null,
-    author: {
-      node: {
-        name: post.author,
-        avatar: null,
-      },
-    },
-    categories: post.category
-      ? {
-        nodes: [
-          {
-            name: post.category,
-            slug: post.category.toLowerCase().replace(/\s+/g, '-'),
-          },
-        ],
-      }
-      : { nodes: [] },
-    tags: {
-      nodes: post.tags.map((tag) => ({
-        name: tag,
-        slug: tag.toLowerCase().replace(/\s+/g, '-'),
-      })),
-    },
-  };
-}
+import { toPublicPost } from '@/lib/blog';
 
 // GET all blog posts
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const published = searchParams.get('published');
-    const format = searchParams.get('format'); // 'wordpress' for WP-compatible format
+    const format = searchParams.get('format');
 
     const where = published === 'true' ? { isPublished: true } : {};
 
@@ -74,9 +18,8 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: 'desc' },
     });
 
-    // Return WordPress-compatible format if requested
-    if (format === 'wordpress') {
-      return NextResponse.json(posts.map(toWordPressFormat));
+    if (format === 'public' || format === 'wordpress') {
+      return NextResponse.json(posts.map(toPublicPost));
     }
 
     return NextResponse.json(posts);
@@ -157,6 +100,10 @@ export async function POST(request: NextRequest) {
         publishedAt: isPublished ? new Date() : null,
       },
     });
+
+    revalidatePath('/');
+    revalidatePath('/blog');
+    revalidatePath(`/blog/${post.slug}`);
 
     return NextResponse.json(post, { status: 201 });
   } catch (error) {

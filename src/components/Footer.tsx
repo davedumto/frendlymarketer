@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPinIcon, MailIcon, FacebookIcon, TwitterIcon, InstagramIcon, LinkedinIcon } from 'lucide-react';
+import { MapPinIcon, MailIcon, PhoneIcon, FacebookIcon, TwitterIcon, InstagramIcon, LinkedinIcon } from 'lucide-react';
 import Image from 'next/image';
 const Footer = () => {
   return <footer className="bg-primary text-white pt-16 pb-8">
@@ -58,11 +58,6 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/team" className="text-white/80 hover:text-accent transition-colors">
-                  Our Team
-                </a>
-              </li>
-              <li>
                 <a href="/privacy-policy" className="text-white/80 hover:text-accent transition-colors">
                   Privacy Policy
                 </a>
@@ -112,6 +107,15 @@ const Footer = () => {
                 <a href="mailto:info@frendlymarqeter.com" className="text-white/80 hover:text-accent transition-colors">
                   info@frendlymarqeter.com
                 </a>
+              </li>
+              <li className="flex items-start">
+                <PhoneIcon className="w-5 h-5 mr-3 text-accent shrink-0 mt-0.5" />
+                <div className="text-white/80">
+                  <span className="block text-xs uppercase tracking-wider text-white/50 mb-0.5">Nairobi Office</span>
+                  <a href="tel:140959665" className="hover:text-accent transition-colors">
+                    140959665
+                  </a>
+                </div>
               </li>
               <li className="flex items-start">
                 <MapPinIcon className="w-5 h-5 mr-3 text-accent shrink-0 mt-0.5" />

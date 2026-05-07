@@ -1,5 +1,4 @@
-'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -55,33 +54,11 @@ const services = [
 ];
 
 export default function ServicesSection() {
-  const [active, setActive] = useState(0);
-  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  // Scroll-driven activation — mobile/tablet only
-  // rootMargin carves out a central band so only one item activates at a time,
-  // and it works correctly for both up and down scrolling.
-  useEffect(() => {
-    if (window.matchMedia('(min-width: 1024px)').matches) return;
-
-    const observers: IntersectionObserver[] = [];
-    rowRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(i); },
-        { threshold: 0, rootMargin: '-38% 0px -38% 0px' }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach(o => o.disconnect());
-  }, []);
-
   return (
     <section className="bg-light py-24 lg:py-32">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
 
-        {/* Section header */}
+        {/* Header */}
         <div className="mb-14 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <span className="js-reveal block text-xs font-semibold tracking-label uppercase text-primary/55 mb-4">
@@ -95,160 +72,89 @@ export default function ServicesSection() {
               WHAT<br />WE DO
             </h2>
           </div>
-          <p className="js-reveal max-w-sm text-charcoal/50 text-sm leading-relaxed md:text-right" data-delay="2">
+          <p
+            className="js-reveal max-w-sm text-charcoal/55 text-sm leading-relaxed md:text-right"
+            data-delay="2"
+          >
             Six disciplines, one focused mission — making your brand impossible to ignore in the digital world.
           </p>
         </div>
 
-        {/* Two-column: list left, image right */}
-        <div className="grid lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_420px] gap-10 lg:gap-16 items-start">
-
-          {/* ── Services list ── */}
-          <div className="js-reveal" data-delay="2">
-            {services.map((service, i) => {
-              const isActive = active === i;
-              return (
-                <div
-                  key={service.num}
-                  ref={(el) => { rowRefs.current[i] = el; }}
-                  className={`border-t first:border-t-0 transition-all duration-300 ${
-                    isActive
-                      ? 'border-primary/20 bg-primary lg:bg-transparent'
-                      : 'border-charcoal/[0.08]'
-                  }`}
-                >
-                  <Link
-                    href={service.href}
-                    onMouseEnter={() => setActive(i)}
-                    className={`group flex items-center gap-5 md:gap-10 py-6 md:py-7 transition-all duration-300 ${
-                      isActive ? 'px-4 lg:px-6 lg:-mx-6 lg:bg-primary xl:px-10 xl:-mx-10' : ''
-                    }`}
-                    style={{ textDecoration: 'none' }}
-                  >
-
-                    {/* Number */}
-                    <span
-                      className={`flex-shrink-0 text-xs font-bold tracking-widest w-8 transition-colors duration-300 ${
-                        isActive ? 'text-accent/70' : 'text-primary/35'
-                      }`}
-                    >
-                      {service.num}
-                    </span>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                        <h3
-                          className={`font-bold tracking-display leading-none transition-colors duration-300 ${
-                            isActive ? 'text-white' : 'text-dark'
-                          }`}
-                          style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)' }}
-                        >
-                          {service.title}
-                        </h3>
-                        <span
-                          className={`text-[11px] font-semibold tracking-label uppercase transition-colors duration-300 ${
-                            isActive ? 'text-white/45' : 'text-charcoal/35'
-                          }`}
-                        >
-                          {service.sub}
-                        </span>
-                      </div>
-
-                      {/* Description — expands on active */}
-                      <div
-                        style={{
-                          maxHeight: isActive ? '80px' : '0',
-                          opacity: isActive ? 1 : 0,
-                          overflow: 'hidden',
-                          transition: 'max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease',
-                        }}
-                      >
-                        <p
-                          className={`text-sm leading-relaxed mt-2.5 pr-8 transition-colors duration-300 ${
-                            isActive ? 'text-white/60' : 'text-charcoal/60'
-                          }`}
-                        >
-                          {service.desc}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Arrow */}
-                    <div
-                      className="flex-shrink-0"
-                      style={{
-                        opacity: isActive ? 1 : 0,
-                        transform: isActive ? 'translate(4px, -4px)' : 'translate(0,0)',
-                        transition: 'opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1)',
-                      }}
-                    >
-                      <svg
-                        className="w-5 h-5 text-accent"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
-                      </svg>
-                    </div>
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* ── Image panel — sticky, desktop only ── */}
-          <div className="hidden lg:block sticky top-28 self-start">
-            <div className="relative overflow-hidden bg-charcoal/5" style={{ aspectRatio: '3/4' }}>
-              {services.map((service, i) => (
+        {/* Card grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {services.map((service, i) => (
+            <Link
+              key={service.num}
+              href={service.href}
+              className="js-reveal services-card group relative bg-white border border-charcoal/[0.08] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-[0_24px_60px_-24px_rgba(7,30,36,0.28)]"
+              data-delay={String((i % 3) + 1)}
+            >
+              {/* Image */}
+              <div className="relative overflow-hidden aspect-[4/3] bg-charcoal/5">
                 <Image
-                  key={service.num}
                   src={service.image}
                   alt={service.title}
                   fill
-                  sizes="(max-width: 1280px) 360px, 420px"
-                  className="object-cover"
-                  style={{
-                    opacity: active === i ? 1 : 0,
-                    transition: 'opacity 0.55s cubic-bezier(0.16,1,0.3,1)',
-                  }}
-                  priority={i === 0}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+                  priority={i < 3}
                 />
-              ))}
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-dark/75 to-transparent pointer-events-none">
-                <p className="text-white/45 text-[11px] tracking-label uppercase font-semibold mb-1">
-                  {services[active].sub}
-                </p>
-                <p className="text-white font-bold text-xl tracking-display leading-tight">
-                  {services[active].title}
-                </p>
+                {/* Number badge */}
+                <span className="absolute top-4 left-4 bg-dark/75 backdrop-blur-md text-accent text-[11px] font-bold tracking-widest px-3 py-1.5">
+                  {service.num}
+                </span>
+                {/* Top accent strip — draws on hover */}
+                <span
+                  aria-hidden
+                  className="absolute top-0 left-0 h-[3px] w-0 bg-accent group-hover:w-full transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                />
               </div>
-            </div>
-            <div className="mt-6">
-              <Link
-                href="/services"
-                className="inline-flex items-center gap-2 text-primary font-semibold text-sm group hover:text-dark transition-colors duration-200"
-              >
-                View all services
-                <svg
-                  className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
 
+              {/* Content */}
+              <div className="flex-1 flex flex-col p-6 lg:p-7">
+                <span className="block text-[11px] font-semibold tracking-label uppercase text-accent/85 mb-3">
+                  {service.sub}
+                </span>
+
+                <h3 className="font-bold tracking-display leading-tight text-dark group-hover:text-primary transition-colors duration-300 mb-3"
+                  style={{ fontSize: 'clamp(1.4rem, 2vw, 1.75rem)' }}
+                >
+                  {service.title}
+                </h3>
+
+                <p className="text-charcoal/55 text-sm leading-relaxed mb-6 flex-1">
+                  {service.desc}
+                </p>
+
+                <div className="flex items-center justify-between pt-4 border-t border-charcoal/[0.08]">
+                  <span className="inline-flex items-center gap-2 text-primary text-xs font-semibold tracking-label uppercase group-hover:text-accent transition-colors duration-300">
+                    Explore
+                  </span>
+                  <span className="w-9 h-9 flex items-center justify-center rounded-full border border-charcoal/15 group-hover:border-accent group-hover:bg-accent transition-all duration-400">
+                    <svg
+                      className="w-3.5 h-3.5 text-charcoal/55 group-hover:text-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-400"
+                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
 
-        {/* Mobile-only bottom CTA */}
-        <div className="mt-12 lg:hidden js-reveal" data-delay="2">
+        {/* View-all CTA */}
+        <div className="mt-12 lg:mt-16 js-reveal" data-delay="2">
           <Link
             href="/services"
             className="inline-flex items-center gap-3 text-primary font-semibold text-sm group hover:text-dark transition-colors duration-200"
           >
             View all services
-            <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg
+              className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>

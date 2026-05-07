@@ -159,50 +159,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Team teaser ── */}
+      {/* ── Stats strip ── */}
       <section className="bg-primary py-24">
         <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="js-reveal">
-              <span className="text-accent/60 text-xs font-semibold tracking-label uppercase block mb-6">The People Behind The Work</span>
-              <h2
-                className="font-bold leading-[0.9] tracking-display text-white mb-6"
-                style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)' }}
-              >
-                MEET OUR<br /><span className="text-accent">TEAM.</span>
-              </h2>
-              <p className="text-white/50 text-base leading-relaxed mb-10 max-w-sm">
-                Behind every successful project is a team of passionate experts. Get to know the creative minds who bring your vision to life.
-              </p>
-              <Link
-                href="/team"
-                className="btn-shimmer inline-flex items-center gap-3 px-8 py-4 bg-accent text-dark font-semibold text-sm tracking-wide hover:bg-white transition-colors duration-300 group"
-              >
-                View Our Team
-                <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-            <div className="js-reveal" data-delay="2">
-              <div className="grid grid-cols-3 gap-1">
-                {[
-                  { label: '10+', sub: 'Years Experience' },
-                  { label: '250+', sub: 'Brands Served' },
-                  { label: '98%', sub: 'Client Retention' },
-                ].map((stat) => (
-                  <div key={stat.label} className="bg-white/5 border border-white/10 p-6 text-center">
-                    <span
-                      className="block font-bold leading-none tracking-display text-accent"
-                      style={{ fontSize: 'clamp(1.8rem, 3vw, 3rem)' }}
-                    >
-                      {stat.label}
-                    </span>
-                    <span className="text-white/40 text-xs tracking-label uppercase mt-2 block">{stat.sub}</span>
-                  </div>
-                ))}
+          <div className="js-reveal grid grid-cols-1 md:grid-cols-3 gap-1">
+            {[
+              { label: '10+', sub: 'Years Experience' },
+              { label: '25+', sub: 'Brands Served' },
+              { label: '98%', sub: 'Client Retention' },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-white/5 border border-white/10 p-10 text-center">
+                <span
+                  className="block font-bold leading-none tracking-display text-accent"
+                  style={{ fontSize: 'clamp(2.4rem, 4vw, 4rem)' }}
+                >
+                  {stat.label}
+                </span>
+                <span className="text-white/40 text-xs tracking-label uppercase mt-3 block">{stat.sub}</span>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

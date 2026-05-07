@@ -63,6 +63,13 @@ export default function ConsultationPage() {
                 </div>
 
                 <div className="js-reveal border-t border-white/10 pt-6" data-delay="1">
+                  <span className="text-accent/70 text-xs font-semibold tracking-label uppercase block mb-2">Nairobi Office Phone</span>
+                  <a href="tel:140959665" className="text-white text-lg font-medium hover:text-accent transition-colors">
+                    140959665
+                  </a>
+                </div>
+
+                <div className="js-reveal border-t border-white/10 pt-6" data-delay="2">
                   <span className="text-accent/70 text-xs font-semibold tracking-label uppercase block mb-2">Office</span>
                   <p className="text-white/70 leading-relaxed">
                     Keystones Park, Riverside Drive<br />
@@ -71,7 +78,7 @@ export default function ConsultationPage() {
                   </p>
                 </div>
 
-                <div className="js-reveal border-t border-white/10 pt-6" data-delay="2">
+                <div className="js-reveal border-t border-white/10 pt-6" data-delay="3">
                   <span className="text-accent/70 text-xs font-semibold tracking-label uppercase block mb-2">Hours</span>
                   <p className="text-white/70 leading-relaxed">
                     Monday – Friday: 9AM – 6PM<br />
@@ -81,7 +88,7 @@ export default function ConsultationPage() {
               </div>
             </div>
 
-            <div className="js-reveal overflow-hidden h-[360px] border border-white/10" data-delay="3">
+            <div className="js-reveal overflow-hidden h-[360px] border border-white/10" data-delay="4">
               <LocationMap
                 address="Keystones Park, Riverside Drive, Baraza Media Lab offices, Nairobi, Kenya"
                 email="info@frendlymarqeter.com"
@@ -123,10 +130,10 @@ export default function ConsultationPage() {
               className="block font-bold leading-none tracking-display text-accent mb-3"
               style={{ fontSize: 'clamp(2.5rem, 4vw, 4rem)' }}
             >
-              250+
+              25+
             </span>
             <h3 className="text-lg font-bold text-primary mb-2">Brands Served</h3>
-            <p className="text-charcoal/55 text-sm leading-relaxed">Our team brings deep experience from hundreds of client partnerships.</p>
+            <p className="text-charcoal/55 text-sm leading-relaxed">Our team brings deep experience from dozens of client partnerships.</p>
           </div>
 
           <div className="js-reveal p-12 md:p-16" data-delay="2">

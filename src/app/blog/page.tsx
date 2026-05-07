@@ -8,6 +8,8 @@ import { CalendarIcon } from 'lucide-react';
 
 import { getAllBlogPosts } from '../../lib/blog';
 
+export const revalidate = 60;
+
 async function getAllPosts() {
   return getAllBlogPosts();
 }

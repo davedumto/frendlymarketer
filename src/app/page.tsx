@@ -14,6 +14,8 @@ import ScrollReveal        from '../components/ScrollReveal';
 import prisma              from '../lib/prisma';
 import { getAllBlogPosts } from '../lib/blog';
 
+export const revalidate = 60;
+
 async function getRecentPosts(count: number) {
   try {
     const all = await getAllBlogPosts();

@@ -6,8 +6,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CalendarIcon, UserIcon } from 'lucide-react';
 import prisma from '@/lib/prisma';
-import { getAllPostSlugs as getWordPressPostSlugs } from '../../../lib/api';
 import { getBlogPostBySlug } from '../../../lib/blog';
+
+export const revalidate = 60;
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -15,13 +16,11 @@ interface BlogPostPageProps {
 
 export async function generateStaticParams() {
   try {
-    const wordpressSlugs = await getWordPressPostSlugs();
     const localPosts = await prisma.blogPost.findMany({
       where: { isPublished: true },
       select: { slug: true },
     });
-    const localSlugs = localPosts.map((post: { slug: string }) => post.slug);
-    return [...wordpressSlugs, ...localSlugs].map((slug) => ({ slug }));
+    return localPosts.map((post: { slug: string }) => ({ slug: post.slug }));
   } catch {
     return [];
   }
@@ -72,7 +71,7 @@ export default async function BlogPost({ params }: BlogPostPageProps) {
         <div className="max-w-screen-xl mx-auto px-6 lg:px-10 relative">
           <Link
             href="/blog"
-            className="js-reveal inline-flex items-center gap-2 text-white/35 hover:text-white/70 text-xs font-semibold tracking-label uppercase transition-colors mb-10"
+            className="js-reveal flex w-fit items-center gap-2 text-white/35 hover:text-white/70 text-xs font-semibold tracking-label uppercase transition-colors mb-10"
           >
             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
@@ -81,7 +80,7 @@ export default async function BlogPost({ params }: BlogPostPageProps) {
           </Link>
 
           {(post.categories?.nodes?.length ?? 0) > 0 && (
-            <span className="js-reveal inline-block text-accent/60 text-xs font-semibold tracking-label uppercase mb-6">
+            <span className="js-reveal block text-accent/70 text-xs font-semibold tracking-label uppercase mb-6">
               {post.categories?.nodes[0].name}
             </span>
           )}
