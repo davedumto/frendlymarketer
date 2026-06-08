@@ -13,17 +13,6 @@ const hardcodedWebProjects = [
   { id: 'hardcoded-3', name: 'Kuza Initiative', url: 'https://www.kuzainitiative.or.ke', description: 'Youth empowerment organization showcasing programs and impact.', image: '/images/kuza.png', order: 3 },
 ];
 
-const hardcodedGraphicProjects = [
-  { id: 'hardcoded-1', image: '/images/Frendly-Marqeter-portfolio-1.png', order: 1 },
-  { id: 'hardcoded-2', image: '/images/Frendly-Marqeter-portfolio-2.png', order: 2 },
-  { id: 'hardcoded-3', image: '/images/Frendly-Marqeter-portfolio-3.png', order: 3 },
-  { id: 'hardcoded-5', image: '/images/Frendly-Marqeter-portfolio-5.png', order: 5 },
-  { id: 'hardcoded-7', image: '/images/Frendly-Marqeter-portfolio-7.png', order: 7 },
-  { id: 'hardcoded-8', image: '/images/Frendly-Marqeter-portfolio-8.png', order: 8 },
-  { id: 'hardcoded-9', image: '/images/Frendly-Marqeter-portfolio-9.png', order: 9 },
-  { id: 'hardcoded-10', image: '/images/Frendly-Marqeter-portfolio-10.png', order: 10 },
-];
-
 async function getWebProjects() {
   try {
     return await prisma.webProject.findMany({
@@ -51,7 +40,7 @@ export const revalidate = 60;
 export default async function PortfolioPage() {
   const [adminWeb, adminGraphic] = await Promise.all([getWebProjects(), getGraphicProjects()]);
   const allWebProjects = [...adminWeb, ...hardcodedWebProjects].sort((a, b) => a.order - b.order);
-  const allGraphicProjects = [...adminGraphic, ...hardcodedGraphicProjects].sort((a, b) => a.order - b.order);
+  const allGraphicProjects = adminGraphic;
 
   return (
     <div>
@@ -181,6 +170,12 @@ export default async function PortfolioPage() {
             </h2>
           </div>
 
+          {allGraphicProjects.length === 0 ? (
+            <div className="js-reveal text-center py-24 border border-primary/10">
+              <span className="text-primary/20 text-6xl font-bold tracking-display block mb-6">FM</span>
+              <p className="text-charcoal/40 text-sm tracking-label uppercase">Graphic work coming soon.</p>
+            </div>
+          ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {allGraphicProjects.map((project, index) => (
               <div
@@ -203,6 +198,7 @@ export default async function PortfolioPage() {
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 
