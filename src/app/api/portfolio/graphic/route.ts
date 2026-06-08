@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, image, order } = body;
+    const { title, image, order, isActive } = body;
 
     if (!image) {
       return NextResponse.json(
@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
         title: title || null,
         image,
         order: order || 0,
+        isActive: isActive ?? true,
       },
     });
 

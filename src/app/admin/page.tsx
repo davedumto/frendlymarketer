@@ -3,9 +3,16 @@
 import React from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import Link from 'next/link';
-import { Users, FileText, FolderOpen, MessageSquare, Handshake, ArrowRight } from 'lucide-react';
+import { Users, FileText, FolderOpen, MessageSquare, Handshake, Mail, ArrowRight } from 'lucide-react';
 
 const quickLinks = [
+  {
+    title: 'Inbox',
+    description: 'Read and respond to contact form messages',
+    href: '/admin/messages',
+    icon: Mail,
+    color: 'bg-accent',
+  },
   {
     title: 'Manage Team',
     description: 'Add, edit, or remove team members',

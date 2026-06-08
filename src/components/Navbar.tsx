@@ -86,7 +86,13 @@ export default function Navbar({ isHomepage = false }: NavbarProps) {
               <span className={`absolute -bottom-0.5 left-0 right-0 h-px bg-accent origin-left transition-transform duration-300 ${pathname.startsWith('/services') ? 'scale-x-100' : 'scale-x-0'}`} />
             </button>
 
-            <div className={`nav-dropdown absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 bg-white shadow-xl border border-gray-100/80 py-1.5 ${servicesOpen ? 'is-open' : ''}`}>
+            <div className={`nav-dropdown absolute top-full left-0 mt-3 w-60 bg-white border-2 border-accent shadow-[0_18px_40px_-15px_rgba(7,30,36,0.25)] py-2 ${servicesOpen ? 'is-open' : ''}`}>
+              {/* Upward pointer */}
+              <span
+                aria-hidden
+                className="absolute -top-[7px] left-6 w-3 h-3 bg-white border-l-2 border-t-2 border-accent rotate-45"
+              />
+
               {[
                 { href: '/services/web-development',   label: 'Web Development'  },
                 { href: '/services/digital-marketing', label: 'Digital Marketing' },
@@ -98,9 +104,20 @@ export default function Navbar({ isHomepage = false }: NavbarProps) {
                 <Link
                   key={href}
                   href={href}
-                  className="block px-4 py-2.5 text-sm text-charcoal hover:bg-light hover:text-primary transition-colors"
+                  className="group relative flex items-center justify-between px-5 py-2.5 text-sm font-medium text-charcoal hover:text-primary hover:bg-light transition-colors"
                 >
-                  {label}
+                  {/* Left-edge gold stripe on hover */}
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-1.5 bottom-1.5 w-[3px] bg-accent scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"
+                  />
+                  <span>{label}</span>
+                  <svg
+                    className="w-3 h-3 text-accent opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
                 </Link>
               ))}
             </div>

@@ -11,6 +11,7 @@ import {
   FolderOpen,
   MessageSquare,
   Handshake,
+  Mail,
   LogOut,
   Menu,
   X,
@@ -23,6 +24,7 @@ interface AdminSidebarProps {
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/messages', label: 'Messages', icon: Mail },
   { href: '/admin/team', label: 'Team', icon: Users },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/portfolio', label: 'Portfolio', icon: FolderOpen },
